@@ -318,6 +318,11 @@ One `GestureRecognizer` on the viewport, built on Pointer Events:
   is redo, both configurable and with visible toolbar buttons as well.
 - Long press (500 ms, movement under 8 px) opens a context menu. No hover-dependent UI exists.
   Everything that is a tooltip on desktop is reachable through a tap or the inspector.
+- **Gesture input is accumulated and applied once per frame** from the latest contact positions,
+  never per pointer event. M0 showed per-event updates produce transient half-updated camera
+  states, because each finger's move arrives as a separate event.
+- Palm classification: a touch with contact width ≥ 40 px (iPadOS reports palms up to about
+  270 px) or one starting while the Pencil is down is ignored. Threshold to be tuned in M1.
 - Hit-testing for vertices, edges and handles runs in view space with a touch radius of 22 CSS px
   for fingers and 10 px for pen (configurable). It is backed by a uniform-grid spatial index
   rebuilt only when geometry changes.

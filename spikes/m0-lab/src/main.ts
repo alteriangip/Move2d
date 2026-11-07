@@ -13,13 +13,14 @@ import { collectEnv } from './env';
 import { webglCaps, contextLoss, texturePipeline } from './exp-webgl';
 import { rigBench } from './exp-rig';
 import { pointerLab } from './exp-pointer';
+import { navLab } from './exp-nav';
 import { psdBench } from './exp-psd';
 import { storageLab } from './exp-storage';
 import { codecLab } from './exp-codec';
 import { gpuStress, heapStress } from './exp-stress';
 
 const AUTOMATIC: Experiment[] = [webglCaps, contextLoss, texturePipeline, storageLab, codecLab, rigBench];
-const INTERACTIVE: Experiment[] = [pointerLab, psdBench];
+const INTERACTIVE: Experiment[] = [navLab, pointerLab, psdBench];
 const RISKY: Experiment[] = [gpuStress, heapStress];
 const ALL = [...AUTOMATIC, ...INTERACTIVE, ...RISKY];
 
@@ -78,6 +79,12 @@ function headline(id: string, d: D): string[] {
           ([t, s]: [string, D]) =>
             `${t}: ${s.eventRateHzMedian ?? '–'} Hz · pressure ${s.pressureLooksReal ? 'real' : 'none'} (${s.pressureDistinctLevels} lv) · tilt ${s.tiltLooksReal ? 'yes' : 'no'} · coalesced/move ${s.coalescedPerMoveAvg} · cancels ${s.cancels}`,
         ).concat([`Page zoom leaked: ${d.pageZoomLeak.leaked} · palm contacts during pen: ${d.touchContactsWhilePenDown} · contextmenu: ${d.contextmenuEvents}`]);
+      case 'canvas-navigation':
+        return [
+          `Rating: ${d.rating ?? 'not rated'} · gesture frames p95 ${d.gestureFrameMs?.p95} ms (${d.gestureFramesOver20ms} over 20 ms) · event→frame p95 ${d.eventToNextFrameMs?.p95} ms`,
+          `Pinch sessions ${d.pinchSessions} · pans ${d.panSessions} · zoom ${d.zoomRange?.join('–')}× · rotation up to ${d.maxRotationDeg}° · Pencil strokes ${d.penStrokes}`,
+          `Palms ignored ${d.palmRejection?.palmsIgnored} (max contact ${d.palmRejection?.maxContactWidth} px) · cancels ${d.cancels?.count} · page zoom leaked: ${d.pageZoomLeak?.leaked}`,
+        ];
       case 'psd-import':
         return Object.entries(d)
           .filter(([k]) => !k.includes('.'))

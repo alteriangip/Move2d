@@ -59,7 +59,7 @@ const newStats = (): TypeStats => ({
 const STEPS = [
   'Pencil: draw several slow and fast strokes; press lightly then firmly; tilt the Pencil.',
   'Finger: draw a few strokes with one finger.',
-  'Two fingers: pinch and pan inside the box (the page itself must NOT zoom).',
+  'Two fingers: pinch and drag inside the box. This box only records events and does not move; check that the page itself does not zoom. (Real pan/zoom is tested in “Canvas navigation”.)',
   'Palm: rest your palm on the box while drawing with the Pencil.',
   'Long-press: hold one finger still in the box for 2 seconds.',
   'Scribble: with the Pencil, tap the text field below the box, write a word, then draw in the box again.',
