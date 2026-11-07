@@ -263,9 +263,9 @@ struct CurveView: View {
             let p = parameter
             let lo = p?.minValue ?? -1, hi = p?.maxValue ?? 1
             let h = geo.size.height - 20
-            func X(_ t: Double) -> CGFloat { labelWidth + CGFloat(t) * pixelsPerSecond + 8 }
-            func Y(_ v: Float) -> CGFloat { 10 + CGFloat(1 - (v - lo) / max(hi - lo, 1e-6)) * h }
-            func V(_ y: CGFloat) -> Float { lo + Float(1 - (y - 10) / h) * (hi - lo) }
+            let X: (Double) -> CGFloat = { t in labelWidth + CGFloat(t) * pixelsPerSecond + 8 }
+            let Y: (Float) -> CGFloat = { v in 10 + CGFloat(1 - (v - lo) / max(hi - lo, 1e-6)) * h }
+            let V: (CGFloat) -> Float = { y in lo + Float(1 - (y - 10) / h) * (hi - lo) }
             ZStack(alignment: .topLeading) {
                 Canvas { ctx, size in
                     ctx.draw(Text(p?.name ?? "").font(.caption), at: CGPoint(x: 70, y: 14))

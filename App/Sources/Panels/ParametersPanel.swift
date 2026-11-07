@@ -125,7 +125,7 @@ struct KeyedSlider: View {
         GeometryReader { geo in
             let w = geo.size.width
             let span = max(range.upperBound - range.lowerBound, 1e-6)
-            func x(_ v: Float) -> CGFloat { CGFloat((v - range.lowerBound) / span) * (w - 16) + 8 }
+            let x: (Float) -> CGFloat = { v in CGFloat((v - range.lowerBound) / span) * (w - 16) + 8 }
             ZStack(alignment: .leading) {
                 Capsule().fill(Color(white: 0.28)).frame(height: 4).padding(.horizontal, 8)
                 Rectangle().fill(Color.white.opacity(0.35)).frame(width: 1, height: 10).position(x: x(defaultValue), y: geo.size.height / 2)
