@@ -250,7 +250,7 @@ Requirement 13 says "use GPU rendering for mesh deformation." The proposal is:
   arrays in buffers and warp grids in textures. The CPU evaluator stays as the reference
   implementation and test oracle.
 
-**M0 result (iPad run 1):** the target model (29k vertices) evaluates in about 2 ms p95, and 240k vertices in about 4 ms, all at 60 fps. CPU deformation is confirmed. GPU deformation is scheduled only for models above about 240k simultaneously deforming vertices, or if real-editor profiling leaves under 4 ms for evaluation. See docs/m0/results-ipad-run1.md.
+**M0 result (iPad run 1):** the target model (29k vertices) evaluates in about 2 ms p95, and 240k vertices in about 4 ms, all at 60 fps (run 2, full screen with batched timing: 0.7 ms and 2.6 ms). CPU deformation is confirmed. GPU deformation is scheduled only for models above about 350k simultaneously deforming vertices, or if real-editor profiling leaves under 4 ms for evaluation. See docs/m0/results-ipad-run1.md.
 
 This choice is stated explicitly rather than taken silently. If GPU evaluation from the start is
 a hard requirement, M2/M3 effort increases by roughly 30%.

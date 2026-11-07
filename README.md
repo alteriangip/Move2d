@@ -10,7 +10,7 @@ Live2D code and does not reverse-engineer proprietary formats.
 
 ## Status
 
-**Phase: Milestone 0 (platform measurements). iPad run 1 is analysed ([results](docs/m0/results-ipad-run1.md)); run 2 is requested for the remaining items.**
+**Phase: Milestone 0 (platform measurements). iPad runs 1–2 are analysed ([run 1](docs/m0/results-ipad-run1.md), [run 2](docs/m0/results-ipad-run2.md)); only touch-input data is outstanding.**
 
 No editor code exists yet. Milestone 1 starts only after the M0 results are approved.
 

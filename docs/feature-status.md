@@ -28,7 +28,7 @@ updated at each milestone sign-off. "Evidence" says how the classification is kn
 
 | Feature | Cost | Trigger to schedule it |
 |---------|------|------------------------|
-| GPU deformation (transform feedback) | About +30% of M2/M3 rig work; dual implementation with the CPU reference | **M0 measured: not needed for the target model** (2 ms p95). Trigger: models above ~240k simultaneously deforming vertices, or under 4 ms of evaluation headroom in real-editor profiling. Transform feedback verified working on the iPad |
+| GPU deformation (transform feedback) | About +30% of M2/M3 rig work; dual implementation with the CPU reference | **M0 measured: not needed for the target model** (2 ms p95). Trigger: models above ~350k simultaneously deforming vertices (run 2, full screen: 240k vertices = 2.6 ms), or under 4 ms of evaluation headroom in real-editor profiling. Transform feedback verified working on the iPad |
 | Free-form warp control points | New interpolation (mean-value or harmonic coordinates); about +2 weeks | Owner request after M3. The architecture keeps the warp mapping behind a `WarpMapping` interface so a free-form variant can be added without rewriting the deformer system |
 | Blend modes beyond normal/add/multiply | Framebuffer ping-pong per blended drawable; costs fill rate | Artist demand after M2 |
 | Cubism model preview (Stage 1) | Live2D review and special Publication License for "Expandable Applications" | Owner decision plus a written answer from Live2D |

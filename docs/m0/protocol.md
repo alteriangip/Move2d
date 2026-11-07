@@ -1,6 +1,6 @@
 # Milestone 0: Measurement Protocol
 
-Status: iPad run 1 complete ([results](results-ipad-run1.md)); run 2 requested for the missing items.
+Status: iPad runs 1 and 2 complete ([run 1](results-ipad-run1.md), [run 2](results-ipad-run2.md)). Touch-input data is still missing.
 
 Milestone 0 replaces the **[verify]** assumptions in
 [04-ipad-safari-compatibility.md](../04-ipad-safari-compatibility.md) with measurements from

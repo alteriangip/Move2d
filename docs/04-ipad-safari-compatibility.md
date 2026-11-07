@@ -59,6 +59,10 @@ measure it with a stress page that allocates textures until it fails. Until meas
 were allocated without failure. The provisional budget is now **1 GB combined**, pending a
 4 GB-cap run and a Safari/PWA run.
 
+**M0 run 2:** iPadOS killed the page at **≈2.6 GB** in both the JS probe (2,624 MB) and the GPU
+probe (2,640 MB), which points to one shared per-process limit. **Budget: 1.3 GB combined (JS +
+GPU)**, re-measured as an installed PWA in M1 acceptance.
+
 | Consumer | Typical size | Strategy |
 |----------|--------------|----------|
 | Artwork textures (GPU) | 2–4 atlas pages × 4096² × 4 B = 64 MB each | Crop layers to their bounds and pack them. Half-resolution "preview quality" atlas. Optionally compressed textures (ASTC is supported by Apple GPUs; WebGL extension availability **[verify]**) |

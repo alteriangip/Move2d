@@ -1,0 +1,1267 @@
+{
+  "createdAt": "2026-11-07T10:16:24.259Z",
+  "env": {
+    "browserShell": "Claude app (WKWebView)",
+    "deviceMemory": null,
+    "devicePixelRatio": 2,
+    "displayMode": {
+      "anyPointerFine": false,
+      "hoverNone": true,
+      "mediaStandalone": false,
+      "pointerCoarse": true,
+      "prefersDark": true,
+      "standalone": false
+    },
+    "features": {
+      "audioWorklet": true,
+      "canvasCaptureStream": true,
+      "compressionStream": true,
+      "createImageBitmap": true,
+      "crossOriginIsolated": false,
+      "gestureEvents": true,
+      "getCoalescedEvents": true,
+      "getPredictedEvents": true,
+      "getUserMedia": true,
+      "imageDecoder": false,
+      "indexedDB": true,
+      "localStorageWorks": true,
+      "measureUserAgentSpecificMemory": false,
+      "mediaRecorder": true,
+      "offscreenCanvas": true,
+      "opfs": true,
+      "performanceMemory": false,
+      "pointerEvents": true,
+      "requestIdleCallback": false,
+      "schedulerYield": false,
+      "screenOrientation": true,
+      "serviceWorker": false,
+      "sharedArrayBuffer": false,
+      "showOpenFilePicker": false,
+      "showSaveFilePicker": false,
+      "storageEstimate": true,
+      "storagePersist": true,
+      "touchEvents": true,
+      "vibrate": false,
+      "videoFrame": true,
+      "visualViewport": true,
+      "wasmInstantiate": true,
+      "wasmSimd": true,
+      "webAssembly": true,
+      "webCodecsVideoEncoder": true,
+      "webShare": true,
+      "webShareFiles": false
+    },
+    "hardwareConcurrency": 4,
+    "hosting": {
+      "embeddedInFrame": true,
+      "origin": "https://6d98e281-06b9-4e15-b4ad-77d7dbe6d4de.frame.claudeusercontent.com",
+      "secureContext": true
+    },
+    "language": "en-GB",
+    "maxTouchPoints": 5,
+    "orientation": "landscape-primary",
+    "platform": "MacIntel",
+    "screen": {
+      "availHeight": 820,
+      "availWidth": 1180,
+      "height": 1180,
+      "width": 820
+    },
+    "timerResolutionMs": 1,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Claude/1.261104.19",
+    "viewport": {
+      "innerHeight": 820,
+      "innerWidth": 1180
+    },
+    "workers": {
+      "createImageBitmapInWorker": "ok",
+      "indexedDBInWorker": "ok",
+      "moduleWorker": "ok",
+      "offscreen2dInWorker": "ok",
+      "offscreenWebgl2InWorker": "ok",
+      "videoEncoderInWorker": "ok"
+    }
+  },
+  "label": "",
+  "notes": "",
+  "results": {
+    "pointer-lab": {
+      "data": {
+        "byType": {
+          "pen": {
+            "altitudeAngleProvided": true,
+            "azimuthAngleProvided": true,
+            "cancels": 0,
+            "coalescedMax": 8,
+            "coalescedPerMoveAvg": 4.03,
+            "contactSizeMax": [
+              0.5,
+              0.5
+            ],
+            "downs": 2,
+            "eventRateHzMedian": 117.6,
+            "moveIntervalMs": {
+              "max": 38,
+              "mean": 8.439,
+              "min": 0,
+              "n": 358,
+              "p50": 8.5,
+              "p95": 17,
+              "p99": 17
+            },
+            "moves": 358,
+            "predictedTotal": 658,
+            "pressureDistinctLevels": 140,
+            "pressureLooksReal": true,
+            "pressureRange": [
+              0,
+              0.644
+            ],
+            "tiltLooksReal": true,
+            "tiltXRange": [
+              18,
+              41
+            ],
+            "tiltYRange": [
+              14,
+              35
+            ],
+            "twistNonZero": false,
+            "ups": 2
+          }
+        },
+        "contextmenuEvents": 0,
+        "gestureEventsPrevented": 0,
+        "longPressDetectedByRecognizer": 0,
+        "maxSimultaneousPointers": 1,
+        "pageScrollEvents": 292,
+        "pageZoomLeak": {
+          "leaked": false,
+          "visualViewportScaleMax": 1,
+          "visualViewportScaleMin": 1
+        },
+        "scribble": {
+          "finalInputLength": 3,
+          "inputFocusedWithin300msOfCanvasInput": 0,
+          "inputValueChangedDuringCanvasStroke": 0
+        },
+        "selectionChangeEvents": 1,
+        "touchContactsWhilePenDown": 0,
+        "touchStartEvents": 2
+      },
+      "durationMs": 38300,
+      "startedAt": "2026-11-07T10:20:08.163Z",
+      "status": "ok"
+    },
+    "psd-import": {
+      "data": {
+        "large": {
+          "agEager": {
+            "accountedPeakBytes": 345775774,
+            "accountedPeakMB": 329.76,
+            "decodeMs": 0,
+            "decodedBytes": 333818880,
+            "decodedMB": 318.35,
+            "fidelity": {
+              "compared": 150,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 150,
+            "ok": true,
+            "parseMs": 197,
+            "strategy": "ag-psd eager (all layers at once)",
+            "totalMs": 197
+          },
+          "agLazy": {
+            "accountedPeakBytes": 29714388,
+            "accountedPeakMB": 28.34,
+            "decodeMs": 325,
+            "decodedBytes": 333818880,
+            "decodedMB": 318.35,
+            "fidelity": {
+              "compared": 150,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 150,
+            "ok": true,
+            "parseMs": 3,
+            "strategy": "ag-psd lazy (one layer at a time)",
+            "totalMs": 328
+          },
+          "agStructure": {
+            "accountedPeakBytes": 11956894,
+            "accountedPeakMB": 11.4,
+            "decodeMs": 0,
+            "decodedBytes": 0,
+            "decodedMB": 0,
+            "fidelity": {
+              "compared": 150,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 150,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd structure only",
+            "totalMs": 1
+          },
+          "pipeline": {
+            "cropEncodeMsPerLayer": {
+              "max": 59,
+              "mean": 24.825,
+              "min": 6,
+              "n": 40,
+              "p50": 22,
+              "p95": 50.15,
+              "p99": 56.66
+            },
+            "cropEncodeMsPerMegapixel": {
+              "max": 67.384,
+              "mean": 50.668,
+              "min": 46.428,
+              "n": 40,
+              "p50": 49.691,
+              "p95": 54.729,
+              "p99": 63.474
+            },
+            "layersProcessed": 40,
+            "pixelsSavedByCropPct": 1.1,
+            "pngToRawRatio": 0.018,
+            "totalMs": 1093
+          },
+          "webtoon": {
+            "accountedPeakBytes": 17757494,
+            "accountedPeakMB": 16.93,
+            "decodeMs": 350,
+            "decodedBytes": 333818880,
+            "decodedMB": 318.35,
+            "fidelity": {
+              "compared": 150,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 150,
+            "ok": true,
+            "parseMs": 31,
+            "strategy": "@webtoon/psd (lazy, WASM)",
+            "totalMs": 381
+          }
+        },
+        "large.generated": {
+          "fileMB": 11.4,
+          "generateMs": 391,
+          "groups": 18,
+          "rawLayerMB": 318.35,
+          "spec": {
+            "height": 6000,
+            "layers": 150,
+            "name": "large",
+            "seed": 13,
+            "sizeFrac": [
+              0.05,
+              0.25
+            ],
+            "width": 4000
+          },
+          "writeMs": 985
+        },
+        "medium": {
+          "agEager": {
+            "accountedPeakBytes": 133463140,
+            "accountedPeakMB": 127.28,
+            "decodeMs": 0,
+            "decodedBytes": 127725736,
+            "decodedMB": 121.81,
+            "fidelity": {
+              "compared": 100,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 100,
+            "ok": true,
+            "parseMs": 76,
+            "strategy": "ag-psd eager (all layers at once)",
+            "totalMs": 76
+          },
+          "agLazy": {
+            "accountedPeakBytes": 14562552,
+            "accountedPeakMB": 13.89,
+            "decodeMs": 178,
+            "decodedBytes": 127725736,
+            "decodedMB": 121.81,
+            "fidelity": {
+              "compared": 100,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 100,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd lazy (one layer at a time)",
+            "totalMs": 179
+          },
+          "agStructure": {
+            "accountedPeakBytes": 5737404,
+            "accountedPeakMB": 5.47,
+            "decodeMs": 0,
+            "decodedBytes": 0,
+            "decodedMB": 0,
+            "fidelity": {
+              "compared": 100,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 100,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd structure only",
+            "totalMs": 1
+          },
+          "pipeline": {
+            "cropEncodeMsPerLayer": {
+              "max": 37,
+              "mean": 15.675,
+              "min": 3,
+              "n": 40,
+              "p50": 15,
+              "p95": 27.1,
+              "p99": 33.88
+            },
+            "cropEncodeMsPerMegapixel": {
+              "max": 74.252,
+              "mean": 53.286,
+              "min": 39.036,
+              "n": 40,
+              "p50": 51.152,
+              "p95": 71.979,
+              "p99": 74.098
+            },
+            "layersProcessed": 40,
+            "pixelsSavedByCropPct": 1.5,
+            "pngToRawRatio": 0.022,
+            "totalMs": 707
+          },
+          "webtoon": {
+            "accountedPeakBytes": 8825148,
+            "accountedPeakMB": 8.42,
+            "decodeMs": 164,
+            "decodedBytes": 127725736,
+            "decodedMB": 121.81,
+            "fidelity": {
+              "compared": 100,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 100,
+            "ok": true,
+            "parseMs": 16,
+            "strategy": "@webtoon/psd (lazy, WASM)",
+            "totalMs": 180
+          }
+        },
+        "medium.generated": {
+          "fileMB": 5.47,
+          "generateMs": 155,
+          "groups": 12,
+          "rawLayerMB": 121.81,
+          "spec": {
+            "height": 4500,
+            "layers": 100,
+            "name": "medium",
+            "seed": 12,
+            "sizeFrac": [
+              0.05,
+              0.25
+            ],
+            "width": 3000
+          },
+          "writeMs": 423
+        },
+        "small": {
+          "agEager": {
+            "accountedPeakBytes": 32690380,
+            "accountedPeakMB": 31.18,
+            "decodeMs": 0,
+            "decodedBytes": 31001040,
+            "decodedMB": 29.56,
+            "fidelity": {
+              "compared": 40,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 40,
+            "ok": true,
+            "parseMs": 20,
+            "strategy": "ag-psd eager (all layers at once)",
+            "totalMs": 20
+          },
+          "agLazy": {
+            "accountedPeakBytes": 5389716,
+            "accountedPeakMB": 5.14,
+            "decodeMs": 33,
+            "decodedBytes": 31001040,
+            "decodedMB": 29.56,
+            "fidelity": {
+              "compared": 40,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 40,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd lazy (one layer at a time)",
+            "totalMs": 34
+          },
+          "agStructure": {
+            "accountedPeakBytes": 1689340,
+            "accountedPeakMB": 1.61,
+            "decodeMs": 0,
+            "decodedBytes": 0,
+            "decodedMB": 0,
+            "fidelity": {
+              "compared": 40,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 40,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd structure only",
+            "totalMs": 1
+          },
+          "pipeline": {
+            "cropEncodeMsPerLayer": {
+              "max": 25,
+              "mean": 10.175,
+              "min": 3,
+              "n": 40,
+              "p50": 9,
+              "p95": 23.05,
+              "p99": 24.61
+            },
+            "cropEncodeMsPerMegapixel": {
+              "max": 97.953,
+              "mean": 57.633,
+              "min": 45.014,
+              "n": 40,
+              "p50": 55.167,
+              "p95": 75.191,
+              "p99": 97.552
+            },
+            "layersProcessed": 40,
+            "pixelsSavedByCropPct": 1.8,
+            "pngToRawRatio": 0.026,
+            "totalMs": 483
+          },
+          "webtoon": {
+            "accountedPeakBytes": 3700376,
+            "accountedPeakMB": 3.53,
+            "decodeMs": 51,
+            "decodedBytes": 31001040,
+            "decodedMB": 29.56,
+            "fidelity": {
+              "compared": 40,
+              "fields": {},
+              "mismatches": 0
+            },
+            "layers": 40,
+            "ok": true,
+            "parseMs": 11,
+            "strategy": "@webtoon/psd (lazy, WASM)",
+            "totalMs": 62
+          }
+        },
+        "small.generated": {
+          "fileMB": 1.61,
+          "generateMs": 71,
+          "groups": 6,
+          "rawLayerMB": 29.56,
+          "spec": {
+            "height": 3000,
+            "layers": 40,
+            "name": "small",
+            "seed": 11,
+            "sizeFrac": [
+              0.05,
+              0.3
+            ],
+            "width": 2000
+          },
+          "writeMs": 100
+        },
+        "user": {
+          "agEager": {
+            "accountedPeakBytes": 185096176,
+            "accountedPeakMB": 176.52,
+            "decodeMs": 0,
+            "decodedBytes": 167737616,
+            "decodedMB": 159.97,
+            "layers": 16,
+            "ok": true,
+            "parseMs": 124,
+            "strategy": "ag-psd eager (all layers at once)",
+            "totalMs": 124
+          },
+          "agLazy": {
+            "accountedPeakBytes": 69516480,
+            "accountedPeakMB": 66.3,
+            "decodeMs": 156,
+            "decodedBytes": 167737616,
+            "decodedMB": 159.97,
+            "layers": 16,
+            "ok": true,
+            "parseMs": 1,
+            "strategy": "ag-psd lazy (one layer at a time)",
+            "totalMs": 157
+          },
+          "agStructure": {
+            "accountedPeakBytes": 17358560,
+            "accountedPeakMB": 16.55,
+            "decodeMs": 0,
+            "decodedBytes": 0,
+            "decodedMB": 0,
+            "layers": 16,
+            "ok": true,
+            "parseMs": 0,
+            "strategy": "ag-psd structure only",
+            "totalMs": 0
+          },
+          "pipeline": {
+            "cropEncodeMsPerLayer": {
+              "max": 309,
+              "mean": 103.563,
+              "min": 3,
+              "n": 16,
+              "p50": 85.5,
+              "p95": 298.5,
+              "p99": 306.9
+            },
+            "cropEncodeMsPerMegapixel": {
+              "max": 94.964,
+              "mean": 49.097,
+              "min": 31.122,
+              "n": 16,
+              "p50": 48.738,
+              "p95": 77.16,
+              "p99": 91.403
+            },
+            "layersProcessed": 16,
+            "pixelsSavedByCropPct": 0,
+            "pngToRawRatio": 0.051,
+            "totalMs": 1787
+          },
+          "webtoon": {
+            "accountedPeakBytes": 0,
+            "accountedPeakMB": 0,
+            "decodeMs": 0,
+            "decodedBytes": 0,
+            "decodedMB": 0,
+            "error": "Out of bounds access",
+            "layers": 0,
+            "ok": false,
+            "parseMs": 0,
+            "strategy": "@webtoon/psd (lazy, WASM)",
+            "totalMs": 12
+          }
+        },
+        "user.census": {
+          "adjustment": 0,
+          "bitsPerChannel": 8,
+          "blendModes": {
+            "normal": 16
+          },
+          "clipped": 0,
+          "colorMode": 3,
+          "fileBytes": 17358560,
+          "groups": 1,
+          "height": 3508,
+          "hidden": 2,
+          "largestLayerPx": 8699840,
+          "maxDepth": 2,
+          "pixelLayers": 16,
+          "rasterMasks": 0,
+          "smartObjects": 0,
+          "text": 0,
+          "totalLayerPx": 41934404,
+          "vectorMasks": 0,
+          "width": 2480,
+          "withEffects": 0
+        }
+      },
+      "durationMs": 234026,
+      "startedAt": "2026-11-07T10:21:27.229Z",
+      "status": "ok"
+    },
+    "rig-bench": {
+      "data": {
+        "decision": {
+          "evalBudgetMs": 4,
+          "evalFixedOverheadMs": 0.368,
+          "evalP95PerVertexUs": 0.0091,
+          "gpuDeformationNeededForTargetModel": false,
+          "targetModelEvalP95Ms": 2,
+          "targetModelFps": 60,
+          "verticesAt4msEvalP95": 398455
+        },
+        "evalOnly": {
+          "target": {
+            "evalMs": {
+              "max": 1.9,
+              "mean": 0.48,
+              "min": 0.3,
+              "n": 130,
+              "p50": 0.5,
+              "p95": 0.7,
+              "p99": 1.171
+            },
+            "vertices": 29400
+          },
+          "x2": {
+            "evalMs": {
+              "max": 2.7,
+              "mean": 0.657,
+              "min": 0.6,
+              "n": 118,
+              "p50": 0.6,
+              "p95": 0.9,
+              "p99": 1.632
+            },
+            "vertices": 58800
+          },
+          "x4": {
+            "evalMs": {
+              "max": 2.7,
+              "mean": 1.316,
+              "min": 1.2,
+              "n": 74,
+              "p50": 1.3,
+              "p95": 1.335,
+              "p99": 2.189
+            },
+            "vertices": 117600
+          },
+          "x8": {
+            "evalMs": {
+              "max": 3.5,
+              "mean": 2.621,
+              "min": 2.6,
+              "n": 47,
+              "p50": 2.6,
+              "p95": 2.6,
+              "p99": 3.132
+            },
+            "vertices": 240000
+          }
+        },
+        "passes": [
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 150,
+            "evalMs": {
+              "max": 2,
+              "mean": 1.133,
+              "min": 1,
+              "n": 300,
+              "p50": 1,
+              "p95": 2,
+              "p99": 2
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 18,
+              "mean": 16.664,
+              "min": 16,
+              "n": 301,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 301,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "target",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.09,
+              "min": 0,
+              "n": 300,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 50700,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.05,
+              "min": 0,
+              "n": 300,
+              "p50": 0,
+              "p95": 0.05,
+              "p99": 1
+            },
+            "vertices": 29400
+          },
+          {
+            "backbuffer": "1180×734",
+            "drawCalls": 150,
+            "evalMs": {
+              "max": 2,
+              "mean": 1.533,
+              "min": 1,
+              "n": 240,
+              "p50": 2,
+              "p95": 2,
+              "p99": 2
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.664,
+              "min": 16,
+              "n": 241,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 241,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "target",
+            "renderScale": 0.5,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.138,
+              "min": 0,
+              "n": 240,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 50700,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.096,
+              "min": 0,
+              "n": 240,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "vertices": 29400
+          },
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 150,
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.664,
+              "min": 16,
+              "n": 241,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 241,
+            "longFrames20ms": 0,
+            "mode": "render-only",
+            "preset": "target",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.096,
+              "min": 0,
+              "n": 240,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 50700,
+            "vertices": 29400
+          },
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 300,
+            "evalMs": {
+              "max": 2,
+              "mean": 1.751,
+              "min": 1,
+              "n": 241,
+              "p50": 2,
+              "p95": 2,
+              "p99": 2
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.665,
+              "min": 16,
+              "n": 242,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 242,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "x2",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.075,
+              "min": 0,
+              "n": 241,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 101400,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.095,
+              "min": 0,
+              "n": 241,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "vertices": 58800
+          },
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 600,
+            "evalMs": {
+              "max": 3,
+              "mean": 2.378,
+              "min": 2,
+              "n": 241,
+              "p50": 2,
+              "p95": 3,
+              "p99": 3
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.665,
+              "min": 16,
+              "n": 242,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 242,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "x4",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.058,
+              "min": 0,
+              "n": 241,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 202800,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.129,
+              "min": 0,
+              "n": 241,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "vertices": 117600
+          },
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 600,
+            "fps": 60,
+            "frameMs": {
+              "max": 18,
+              "mean": 16.669,
+              "min": 16,
+              "n": 181,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 181,
+            "longFrames20ms": 0,
+            "mode": "render-only",
+            "preset": "x4",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.278,
+              "min": 0,
+              "n": 180,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 202800,
+            "vertices": 117600
+          },
+          {
+            "backbuffer": "2360×1468",
+            "drawCalls": 600,
+            "evalMs": {
+              "max": 4,
+              "mean": 3.067,
+              "min": 3,
+              "n": 240,
+              "p50": 3,
+              "p95": 4,
+              "p99": 4
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.664,
+              "min": 16,
+              "n": 241,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 241,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "x8",
+            "renderScale": 1,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.058,
+              "min": 0,
+              "n": 240,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 433200,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.242,
+              "min": 0,
+              "n": 240,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "vertices": 240000
+          },
+          {
+            "backbuffer": "1180×734",
+            "drawCalls": 600,
+            "evalMs": {
+              "max": 5,
+              "mean": 3.872,
+              "min": 3,
+              "n": 180,
+              "p50": 4,
+              "p95": 4,
+              "p99": 4
+            },
+            "fps": 60,
+            "frameMs": {
+              "max": 17,
+              "mean": 16.669,
+              "min": 16,
+              "n": 181,
+              "p50": 17,
+              "p95": 17,
+              "p99": 17
+            },
+            "frames": 181,
+            "longFrames20ms": 0,
+            "mode": "full",
+            "preset": "x8",
+            "renderScale": 0.5,
+            "submitMs": {
+              "max": 1,
+              "mean": 0.094,
+              "min": 0,
+              "n": 180,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "triangles": 433200,
+            "uploadMs": {
+              "max": 1,
+              "mean": 0.222,
+              "min": 0,
+              "n": 180,
+              "p50": 0,
+              "p95": 1,
+              "p99": 1
+            },
+            "vertices": 240000
+          }
+        ]
+      },
+      "durationMs": 43454,
+      "startedAt": "2026-11-07T10:32:08.770Z",
+      "status": "ok"
+    },
+    "storage": {
+      "data": {
+        "estimateBefore": {
+          "quotaMB": 921.6,
+          "usageMB": 32
+        },
+        "estimateWithData": {
+          "quotaMB": 921.6,
+          "usageMB": 112.01
+        },
+        "evictionMarker": {
+          "daysSinceFirstSeen": 0.01,
+          "firstSeen": "2026-11-07T10:17:50.651Z",
+          "survivedFromEarlierVisit": true,
+          "visits": 2
+        },
+        "indexedDB": {
+          "arrayBuffer": {
+            "readBackComplete": true,
+            "readMBps": 1481.5,
+            "writeMBps": 941.2
+          },
+          "blob": "error: NotFoundError: The object can not be found here."
+        },
+        "opfs": {
+          "available": true,
+          "createWritable": true,
+          "write32MBms": 51
+        },
+        "persistRequestResult": false,
+        "persistedAfter": false,
+        "persistedBefore": false
+      },
+      "durationMs": 612,
+      "startedAt": "2026-11-07T10:32:06.676Z",
+      "status": "ok"
+    },
+    "stress-gpu": {
+      "data": {
+        "attemptedMB": 2656,
+        "capMB": 3072,
+        "interpretation": "The page was killed or reloaded while this step was running (most likely the OS memory limit).",
+        "lastStartedStep": 165,
+        "phase": "allocating",
+        "reachedMB": 2640
+      },
+      "durationMs": 5033,
+      "startedAt": "2026-11-07T10:34:00.110Z",
+      "status": "terminated"
+    },
+    "stress-heap": {
+      "data": {
+        "attemptedMB": 2688,
+        "capMB": 3072,
+        "interpretation": "The page was killed or reloaded while this step was running (most likely the OS memory limit).",
+        "lastStartedStep": 41,
+        "phase": "allocating",
+        "reachedMB": 2624
+      },
+      "durationMs": 4514,
+      "startedAt": "2026-11-07T10:33:51.793Z",
+      "status": "terminated"
+    },
+    "texture-pipeline": {
+      "data": {
+        "s2048": {
+          "decodeCreateImageBitmapMs": 48,
+          "getImageDataMs": 18,
+          "paintMs": 7,
+          "pngBytes": 3043275,
+          "pngEncodeCanvasMs": 199,
+          "pngEncodeOffscreenMs": 188,
+          "pngMB": 2.9,
+          "uploadFromImageBitmapMs": 89,
+          "uploadFromTypedArrayMs": 9
+        },
+        "s4096": {
+          "decodeCreateImageBitmapMs": 144,
+          "getImageDataMs": 71,
+          "paintMs": 0,
+          "pngBytes": 9891784,
+          "pngEncodeCanvasMs": 632,
+          "pngEncodeOffscreenMs": 639,
+          "pngMB": 9.43,
+          "uploadFromImageBitmapMs": 367,
+          "uploadFromTypedArrayMs": 90
+        }
+      },
+      "durationMs": 2609,
+      "startedAt": "2026-11-07T10:32:04.064Z",
+      "status": "ok"
+    },
+    "video-export": {
+      "data": {
+        "encode1080p": {
+          "canvasDrawMsTotal": 4,
+          "chunks": 120,
+          "config": "H.264 Baseline 1080p",
+          "encodeFps": 89.2,
+          "error": null,
+          "frames": 120,
+          "outputMB": 1.3,
+          "totalMs": 1345
+        },
+        "encoderSupport": {
+          "AV1 1080p": false,
+          "H.264 Baseline 1080p": true,
+          "H.264 Baseline 720p": true,
+          "H.264 High 1080p": true,
+          "H.264 High 4K": true,
+          "H.264 Main 1080p": true,
+          "HEVC Main 1080p": true,
+          "VP8 1080p": true,
+          "VP9 1080p": true,
+          "VP9 1080p + alpha": false
+        },
+        "mediaRecorder": {
+          "video/mp4": true,
+          "video/mp4;codecs=avc1": true,
+          "video/mp4;codecs=hvc1": false,
+          "video/webm": true,
+          "video/webm;codecs=vp8": true,
+          "video/webm;codecs=vp9": true
+        }
+      },
+      "durationMs": 1473,
+      "startedAt": "2026-11-07T10:32:07.292Z",
+      "status": "ok"
+    },
+    "webgl-caps": {
+      "data": {
+        "colorBufferFloat": true,
+        "colorBufferHalfFloat": true,
+        "compressed": {
+          "astc": true,
+          "astcProfiles": [
+            "hdr",
+            "ldr"
+          ],
+          "bptc": false,
+          "etc": true,
+          "etc1": true,
+          "pvrtc": true,
+          "s3tc": false
+        },
+        "contextAttributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "high-performance",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false
+        },
+        "extensions": [
+          "EXT_clip_control",
+          "EXT_color_buffer_float",
+          "EXT_color_buffer_half_float",
+          "EXT_conservative_depth",
+          "EXT_depth_clamp",
+          "EXT_polygon_offset_clamp",
+          "EXT_render_snorm",
+          "EXT_texture_filter_anisotropic",
+          "EXT_texture_mirror_clamp_to_edge",
+          "EXT_texture_norm16",
+          "KHR_parallel_shader_compile",
+          "NV_shader_noperspective_interpolation",
+          "OES_draw_buffers_indexed",
+          "OES_sample_variables",
+          "OES_shader_multisample_interpolation",
+          "WEBGL_blend_func_extended",
+          "WEBGL_clip_cull_distance",
+          "WEBGL_compressed_texture_astc",
+          "WEBGL_compressed_texture_etc",
+          "WEBGL_compressed_texture_etc1",
+          "WEBGL_compressed_texture_pvrtc",
+          "WEBKIT_WEBGL_compressed_texture_pvrtc",
+          "WEBGL_debug_renderer_info",
+          "WEBGL_debug_shaders",
+          "WEBGL_lose_context",
+          "WEBGL_multi_draw",
+          "WEBGL_polygon_mode",
+          "WEBGL_provoking_vertex",
+          "WEBGL_render_shared_exponent",
+          "WEBGL_stencil_texturing"
+        ],
+        "floatLinear": false,
+        "glsl": "WebGL GLSL ES 3.00",
+        "gpuTimerQuery": false,
+        "limits": {
+          "ALIASED_LINE_WIDTH_RANGE": [
+            1,
+            1
+          ],
+          "MAX_3D_TEXTURE_SIZE": 2048,
+          "MAX_ARRAY_TEXTURE_LAYERS": 2048,
+          "MAX_DRAW_BUFFERS": 8,
+          "MAX_ELEMENT_INDEX": 4294967294,
+          "MAX_RENDERBUFFER_SIZE": 16384,
+          "MAX_SAMPLES": 4,
+          "MAX_TEXTURE_IMAGE_UNITS": 16,
+          "MAX_TEXTURE_SIZE": 16384,
+          "MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS": 128,
+          "MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS": 4,
+          "MAX_UNIFORM_BLOCK_SIZE": 16384,
+          "MAX_VARYING_VECTORS": 31,
+          "MAX_VERTEX_ATTRIBS": 16,
+          "MAX_VERTEX_TEXTURE_IMAGE_UNITS": 16,
+          "MAX_VERTEX_UNIFORM_VECTORS": 1024,
+          "MAX_VIEWPORT_DIMS": [
+            16384,
+            16384
+          ]
+        },
+        "renderer": "WebKit WebGL",
+        "transformFeedback": {
+          "mismatches": 0,
+          "roundTripMsIncludingReadback": 4,
+          "vertices": 100000,
+          "works": true
+        },
+        "unmaskedRenderer": "Apple GPU",
+        "unmaskedVendor": "Apple Inc.",
+        "vendor": "WebKit",
+        "version": "WebGL 2.0",
+        "webgl2": true
+      },
+      "durationMs": 23,
+      "startedAt": "2026-11-07T10:32:03.950Z",
+      "status": "ok"
+    },
+    "webgl-context-loss": {
+      "data": {
+        "contextUsableAfterRestore": true,
+        "events": [
+          "lost",
+          "restored"
+        ],
+        "isContextLostAfterLose": true,
+        "loseContextExtension": true,
+        "lostEventLatencyMs": 3,
+        "rebuild2048TextureMs": 7,
+        "restoreLatencyMs": 1
+      },
+      "durationMs": 83,
+      "startedAt": "2026-11-07T10:32:03.978Z",
+      "status": "ok"
+    }
+  },
+  "runId": "run-20261107-1216-uavbz",
+  "schema": 1,
+  "submittedAt": "2026-11-07T10:34:10.469Z",
+  "updatedAt": "2026-11-07T10:34:07.950Z"
+}
