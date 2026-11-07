@@ -32,3 +32,21 @@ jobs:
           xcodebuild -project Move2D.xcodeproj -scheme Move2D \
             -destination 'generic/platform=iOS Simulator' \
             -configuration Debug CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error:|warning: .*deprecated|BUILD (SUCCEEDED|FAILED)|\*\* " | head -300
+      - name: Build unsigned IPA (device)
+        run: |
+          set -o pipefail
+          cd App
+          xcodebuild -project Move2D.xcodeproj -scheme Move2D \
+            -destination 'generic/platform=iOS' -configuration Release \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | head -100
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/Move2D.app Payload/
+          zip -qr Move2D-unsigned.ipa Payload
+          ls -la Move2D-unsigned.ipa
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Move2D-unsigned-ipa
+          path: App/Move2D-unsigned.ipa
+          retention-days: 30
