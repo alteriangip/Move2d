@@ -10,8 +10,9 @@ enum LeftTab: String, CaseIterable { case layers = "Layers", deformers = "Deform
 enum RightTab: String, CaseIterable { case inspector = "Inspector", parameters = "Parameters", physics = "Physics" }
 
 struct EditorRootView: View {
-    @ObservedObject var document: Move2DDocument
-    @Environment(\.undoManager) private var undoManager
+    let session: EditorSession
+    let projectName: String
+    let onClose: () -> Void
     @Environment(\.horizontalSizeClass) private var hSize
 
     @State private var viewport = CanvasViewport()
@@ -31,7 +32,6 @@ struct EditorRootView: View {
     @State private var errorMessage: String?
     @State private var importWarnings: [String] = []
 
-    var session: EditorSession { document.session }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -79,28 +79,18 @@ struct EditorRootView: View {
 
     func setUp() {
         if tools == nil { tools = CanvasToolController(session: session, viewport: viewport) }
-        undoManager?.levelsOfUndo = session.maxUndo
-        session.onUndoableChange = { [weak session] name in
-            guard let session, let um = undoManager else { return }
-            Self.registerSystemUndo(um, session, name: name, undo: true)
-        }
         if hSize == .compact { showLeft = false; showRight = false }
-    }
-
-    /// Mirror editor steps into the system UndoManager so ⌘Z, three-finger
-    /// gestures and document autosave all work.
-    static func registerSystemUndo(_ um: UndoManager, _ s: EditorSession, name: String, undo: Bool) {
-        um.registerUndo(withTarget: s) { target in
-            if undo { target.undo() } else { target.redo() }
-            registerSystemUndo(um, target, name: name, undo: !undo)
-        }
-        um.setActionName(name)
     }
 
     // MARK: Toolbar
 
     var toolbar: some View {
         HStack(spacing: 6) {
+            Button(action: onClose) {
+                Label("Projects", systemImage: "square.grid.2x2").labelStyle(.iconOnly).frame(width: 34, height: 34)
+            }
+            .help("Back to projects")
+            Text(projectName).font(.headline).lineLimit(1).frame(maxWidth: 160, alignment: .leading)
             IconButton(systemName: "sidebar.left", help: "Layers", active: showLeft) { withAnimation(.snappy) { showLeft.toggle() } }
             Menu {
                 Button { importingPSD = true } label: { Label("Import PSD…", systemImage: "square.and.arrow.down") }
@@ -123,10 +113,12 @@ struct EditorRootView: View {
                 IconButton(systemName: icon, help: tool.title, active: session.tool == tool) { session.tool = tool }
             }
             Divider().frame(height: 24)
-            IconButton(systemName: "arrow.uturn.backward", help: "Undo") { undoManager?.undo() }
+            IconButton(systemName: "arrow.uturn.backward", help: "Undo") { session.undo() }
                 .disabled(!session.canUndo)
-            IconButton(systemName: "arrow.uturn.forward", help: "Redo") { undoManager?.redo() }
+                .keyboardShortcut("z", modifiers: .command)
+            IconButton(systemName: "arrow.uturn.forward", help: "Redo") { session.redo() }
                 .disabled(!session.canRedo)
+                .keyboardShortcut("z", modifiers: [.command, .shift])
 
             Spacer()
 

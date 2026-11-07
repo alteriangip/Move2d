@@ -25,7 +25,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportsDocumentBrowser</key><true/>
+	<key>UISupportsDocumentBrowser</key><false/>
 	<key>LSSupportsOpeningDocumentsInPlace</key><true/>
 	<key>UIFileSharingEnabled</key><true/>
 	<key>CFBundleDocumentTypes</key>
