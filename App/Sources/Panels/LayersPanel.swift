@@ -95,7 +95,6 @@ struct LayerRow: View {
         .background(selected ? Theme.accent.opacity(0.28) : Color.clear)
         .contentShape(Rectangle())
         .onTapGesture { session.select(id, extend: false) }
-        .simultaneousGesture(TapGesture().modifiers(.shift).onEnded { session.select(id, extend: true) })
         .draggable(id)
         .dropDestination(for: String.self) { items, _ in
             for dragged in items where dragged != id {
