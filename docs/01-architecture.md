@@ -250,6 +250,8 @@ Requirement 13 says "use GPU rendering for mesh deformation." The proposal is:
   arrays in buffers and warp grids in textures. The CPU evaluator stays as the reference
   implementation and test oracle.
 
+**M0 result (iPad run 1):** the target model (29k vertices) evaluates in about 2 ms p95, and 240k vertices in about 4 ms, all at 60 fps. CPU deformation is confirmed. GPU deformation is scheduled only for models above about 240k simultaneously deforming vertices, or if real-editor profiling leaves under 4 ms for evaluation. See docs/m0/results-ipad-run1.md.
+
 This choice is stated explicitly rather than taken silently. If GPU evaluation from the start is
 a hard requirement, M2/M3 effort increases by roughly 30%.
 
@@ -259,7 +261,7 @@ a hard requirement, M2/M3 effort increases by roughly 30%.
   padding and an optional MSAA renderbuffer at reduced-quality settings.
 - **Textures:** each imported layer is cropped to its non-transparent bounds plus 2–4 px padding,
   then packed into **atlas pages** (maxrects, 2048² or 4096² chosen from `MAX_TEXTURE_SIZE` and
-  the quality setting). Atlas packing is a derived, rebuildable artifact. The project stores
+  the quality setting; M0 measured 4096² decode at 117 ms on the iPad, so 4096² is the default). Atlas packing is a derived, rebuildable artifact. The project stores
   per-layer PNGs, and UVs are remapped from layer space to atlas space at load time.
 - **Draw path:** one dynamic vertex buffer for world positions, one static buffer for atlas UVs,
   and a static index buffer. Drawables are grouped into draw calls by atlas page, blend mode and
@@ -399,6 +401,8 @@ thumbnails/cover.png
 - Object stores: `projects` (metadata), `documents` (latest `project.json` per project),
   `blobs` (content-addressed by SHA-256: PNGs and geometry buffers), `autosave` (rolling
   snapshots).
+- **Binary values are stored as `ArrayBuffer`, never `Blob`.** M0 measured WebKit refusing
+  `Blob` values in IndexedDB in a third-party context, and `ArrayBuffer` works everywhere.
 - **Autosave** runs 2 s after the last committed command, and on `visibilitychange → hidden`.
   Serialization runs in a worker. Unchanged blobs are not rewritten because they are
   content-addressed.

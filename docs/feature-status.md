@@ -21,13 +21,14 @@ updated at each milestone sign-off. "Evidence" says how the classification is kn
 | Exact JS heap or GPU memory readings in Safari | No API exposed | M0 probes `performance.memory` and `measureUserAgentSpecificMemory` | Accounted memory plus crash-threshold testing |
 | Exporting genuine `.moc3` | Undocumented proprietary binary. Reverse engineering is excluded by project rules | Doc 05 | Native `.olive` format and an OpenLive runtime |
 | Recovering deformers/keyforms from a `.moc3` | Cubism Core exposes only post-deformation drawables | Core API reference (doc 05) | "Baked" mesh-only import, labelled as such |
+| Transparent (alpha) video export | No alpha-capable video encoder on the device (VP9+alpha unsupported, M0) | M0 video probe | PNG sequence with alpha |
 | Haptic feedback | Vibration API absent on iOS | M0 feature probe (`vibrate`) | Visual feedback |
 
 ## Expensive
 
 | Feature | Cost | Trigger to schedule it |
 |---------|------|------------------------|
-| GPU deformation (transform feedback) | About +30% of M2/M3 rig work; dual implementation with the CPU reference | M0 rig benchmark: target model eval p95 > 4 ms or full-mode fps < 55 on the iPad. The container shows transform feedback works in principle |
+| GPU deformation (transform feedback) | About +30% of M2/M3 rig work; dual implementation with the CPU reference | **M0 measured: not needed for the target model** (2 ms p95). Trigger: models above ~240k simultaneously deforming vertices, or under 4 ms of evaluation headroom in real-editor profiling. Transform feedback verified working on the iPad |
 | Free-form warp control points | New interpolation (mean-value or harmonic coordinates); about +2 weeks | Owner request after M3. The architecture keeps the warp mapping behind a `WarpMapping` interface so a free-form variant can be added without rewriting the deformer system |
 | Blend modes beyond normal/add/multiply | Framebuffer ping-pong per blended drawable; costs fill rate | Artist demand after M2 |
 | Cubism model preview (Stage 1) | Live2D review and special Publication License for "Expandable Applications" | Owner decision plus a written answer from Live2D |

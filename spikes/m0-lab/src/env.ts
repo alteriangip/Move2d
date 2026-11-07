@@ -16,10 +16,23 @@ function has(path: string): boolean {
   return typeof o !== 'undefined';
 }
 
-/** Minimal SIMD module (v128.const + drop) used to probe WebAssembly SIMD. */
-const SIMD_WASM = new Uint8Array([
-  0, 97, 115, 109, 1, 0, 0, 0, 1, 4, 1, 96, 0, 0, 3, 2, 1, 0, 10, 22, 1, 20, 0, 253, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 11,
-]);
+/**
+ * Minimal SIMD module (i32.const 0; i8x16.splat; i8x16.popcnt), the probe used by
+ * wasm-feature-detect. (The M0 run-1 probe bytes were invalid and always reported false.)
+ */
+const SIMD_WASM = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 0, 1, 123, 3, 2, 1, 0, 10, 10, 1, 8, 0, 65, 0, 253, 15, 253, 98, 11]);
+
+/** Smallest observable non-zero step of performance.now() (Safari clamps it in some contexts). */
+function timerResolutionMs(): number {
+  let min = Infinity;
+  for (let i = 0; i < 20; i++) {
+    const a = performance.now();
+    let b = a;
+    while (b === a) b = performance.now();
+    min = Math.min(min, b - a);
+  }
+  return Math.round(min * 1000) / 1000;
+}
 
 function workerProbe(src: string, timeoutMs = 3000): Promise<Probe> {
   return new Promise((resolve) => {
@@ -132,8 +145,11 @@ export async function collectEnv(): Promise<Record<string, unknown>> {
     videoEncoderInWorker: await workerProbe(`postMessage(typeof VideoEncoder!=='undefined'?'ok':'missing')`),
   };
 
+  const ua = navigator.userAgent;
   return {
-    userAgent: navigator.userAgent,
+    userAgent: ua,
+    browserShell: /Claude\//.test(ua) ? 'Claude app (WKWebView)' : /CriOS|FxiOS|EdgiOS/.test(ua) ? 'other iOS browser (WKWebView)' : /Safari\//.test(ua) && !/Chrome|Chromium/.test(ua) ? 'Safari' : 'other',
+    timerResolutionMs: timerResolutionMs(),
     platform: navigator.platform,
     maxTouchPoints: navigator.maxTouchPoints,
     hardwareConcurrency: navigator.hardwareConcurrency,

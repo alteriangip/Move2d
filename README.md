@@ -10,7 +10,7 @@ Live2D code and does not reverse-engineer proprietary formats.
 
 ## Status
 
-**Phase: Milestone 0 (platform measurements). The lab is built; iPad runs are pending.**
+**Phase: Milestone 0 (platform measurements). iPad run 1 is analysed ([results](docs/m0/results-ipad-run1.md)); run 2 is requested for the remaining items.**
 
 No editor code exists yet. Milestone 1 starts only after the M0 results are approved.
 

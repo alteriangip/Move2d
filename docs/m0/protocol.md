@@ -1,6 +1,6 @@
 # Milestone 0: Measurement Protocol
 
-Status: lab built, container baseline recorded, **awaiting iPad runs**.
+Status: iPad run 1 complete ([results](results-ipad-run1.md)); run 2 requested for the missing items.
 
 Milestone 0 replaces the **[verify]** assumptions in
 [04-ipad-safari-compatibility.md](../04-ipad-safari-compatibility.md) with measurements from

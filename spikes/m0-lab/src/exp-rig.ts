@@ -220,14 +220,16 @@ async function evalOnly(rig: Rig, ms: number): Promise<ReturnType<typeof summari
     evaluateRig(rig);
     await sleep(0);
   }
+  // Each sample times a batch of 10 evaluations and divides, so a 1 ms timer
+  // resolution (Safari in cross-origin frames) still yields sub-millisecond precision.
   const end = performance.now() + ms;
   while (performance.now() < end) {
+    const t0 = performance.now();
     for (let k = 0; k < 10; k++) {
-      const t0 = performance.now();
       animateParams(rig, (t += 0.016));
       evaluateRig(rig);
-      s.push(performance.now() - t0);
     }
+    s.push((performance.now() - t0) / 10);
     await sleep(0);
   }
   return summarize(s);
@@ -284,6 +286,7 @@ export const rigBench: Experiment = {
 
     // Decision support: fit eval p95 vs vertices and find the 4 ms budget crossing.
     const eo = Object.values(evalOnlyRes) as { vertices: number; evalMs: { p95: number; p50: number } }[];
+    // Fit on batched means (robust to timer clamping); p95 of batches is reported per preset.
     const fit = eo.length >= 2 ? linearFit(eo.map((e) => e.vertices), eo.map((e) => e.evalMs.p95)) : null;
     const BUDGET = 4;
     const verticesAtBudget = fit && fit.b > 0 ? Math.round((BUDGET - fit.a) / fit.b) : null;

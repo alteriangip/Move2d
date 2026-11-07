@@ -251,7 +251,16 @@ export const pointerLab: Experiment = {
           const med = s.intervals.length ? summarize(s.intervals).p50 : NaN;
           return `${t}: ${s.moves} moves, ~${med ? Math.round(1000 / med) : '–'} Hz, pressure ${s.pressure.size} levels`;
         });
-        live.textContent = parts.join(' · ') || 'Waiting for input…';
+        const ok = (b: boolean) => (b ? '✓' : '·');
+        const checks = [
+          `${ok((stats.pen?.moves ?? 0) > 50)} Pencil`,
+          `${ok((stats.touch?.moves ?? 0) > 20)} finger`,
+          `${ok(maxSimultaneous >= 2)} two fingers`,
+          `${ok(touchDuringPen > 0)} palm during Pencil`,
+          `${ok(longPressDetected > 0)} long-press`,
+          `${ok(input.value.length > 0)} Scribble`,
+        ].join('   ');
+        live.textContent = `${checks}\n${parts.join(' · ') || 'Waiting for input…'}`;
       }, 300);
 
       done.onclick = () => {
@@ -293,6 +302,14 @@ export const pointerLab: Experiment = {
           selectionChangeEvents: selectionChanges,
           gestureEventsPrevented: gestureEvents,
           touchStartEvents: touchStarts,
+          stepsCaptured: {
+            pencil: (stats.pen?.moves ?? 0) > 50,
+            finger: (stats.touch?.moves ?? 0) > 20,
+            twoFingers: maxSimultaneous >= 2,
+            palmDuringPencil: touchDuringPen > 0,
+            longPress: longPressDetected > 0,
+            scribble: input.value.length > 0,
+          },
           pageZoomLeak: { visualViewportScaleMin: round(scaleMin, 3), visualViewportScaleMax: round(scaleMax, 3), leaked: scaleMax - scaleMin > 0.01 },
           pageScrollEvents: scrollMoved,
           scribble: {

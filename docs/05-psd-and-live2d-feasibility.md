@@ -22,7 +22,12 @@ Reading PSD files is therefore legitimate, documented interoperability.
 | **ag-psd** (MIT, actively maintained) | Full layer tree with groups; names, opacity, visibility, blend modes, clipping, masks, effects metadata; PSB support; `useImageData` gives raw pixels without a canvas, so it runs in a worker; options to skip composite/thumbnail data | Decodes all requested layer pixels in one call, so peak memory is the file plus all layers. Does not re-render effects or text |
 | **@webtoon/psd** (MIT) | Designed for the browser; decodes layer pixels **lazily per layer** (`await layer.composite()`), so peak memory is lower | Smaller feature surface; maintenance cadence to be checked |
 
-**Plan:** the M1 spike benchmarks both libraries on a fixture set (a small file, a 4000×6000 file
+**M0 outcome:** ag-psd in lazy per-layer mode was chosen. It had 0 metadata mismatches on all
+fixtures, about 28 MB accounted peak on a 150-layer 4000×6000 file (vs 330 MB eager), and it
+handled the owner's real PSD, on which @webtoon/psd failed. The custom decoder fallback is not
+needed. See `docs/m0/results-ipad-run1.md`.
+
+**Original plan:** the M1 spike benchmarks both libraries on a fixture set (a small file, a 4000×6000 file
 with 150 layers, a PSB, and a 16-bit file). It measures peak memory, time and correctness on the
 iPad. The PSD adapter sits behind an `ArtworkImporter` interface in `packages/io`, so the decision
 can be changed later. If neither keeps peak memory within budget for large files, the fallback is

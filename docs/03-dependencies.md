@@ -19,7 +19,7 @@ Licences marked † are to be confirmed during the M1 licence audit.
 |---------|---------|--------------|---------|-------------------------|
 | `react`, `react-dom` | UI framework (required by the brief) | Required; widespread knowledge; concurrent rendering keeps panels responsive | MIT | — |
 | `zustand` | Session/UI state store | Tiny, selector-based subscriptions, works outside React (needed by the viewport loop) | MIT | Redux Toolkit (heavier), Jotai |
-| `ag-psd` | PSD/PSB reading | Most complete maintained JS PSD reader: layer tree, groups, opacity, visibility, blend modes, clipping, masks; can return raw `ImageData` without a canvas (works in workers) | MIT | `@webtoon/psd` (lazy per-layer decode, lower peak memory; **benchmark both in the M1 spike**), `psd.js` (unmaintained) |
+| `ag-psd` | PSD/PSB reading | Most complete maintained JS PSD reader: layer tree, groups, opacity, visibility, blend modes, clipping, masks; can return raw `ImageData` without a canvas (works in workers) | MIT | `@webtoon/psd` (**rejected in M0**: failed on a real-world PSD, last release 2023), `psd.js` (unmaintained) |
 | `delaunator` | Fast 2D Delaunay triangulation | Robust, fast, widely used, maintained by Mapbox | ISC | `cdt2d` (unmaintained), `poly2tri` (fragile on duplicate points) |
 | `@kninnug/constrainautor` | Constrained edges on top of Delaunator | Adds the boundary/user-edge constraints needed for mesh editing | ISC† | `earcut` (no interior Steiner points, poor triangle quality) |
 | `fflate` | Zip read/write for `.olive` and PNG-sequence export | Fastest pure-JS deflate; streaming; worker-friendly; small | MIT | JSZip (slower, larger) |

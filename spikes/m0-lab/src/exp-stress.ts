@@ -34,7 +34,7 @@ export const gpuStress: Experiment = {
   summary: 'Allocates 16 MB textures (and draws with each, so they are really resident) until failure or the chosen cap.',
   risky: true,
   async run(ctx) {
-    const cap = await capFromPanel(ctx, 3072, 'Allocates GPU textures until failure.');
+    const cap = await capFromPanel(ctx, 4096, 'Allocates GPU textures until failure.');
     ctx.panel.innerHTML = '';
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 1;
@@ -112,7 +112,7 @@ export const heapStress: Experiment = {
   summary: 'Allocates and touches 64 MB ArrayBuffers until RangeError, an OS kill, or the chosen cap.',
   risky: true,
   async run(ctx) {
-    const cap = await capFromPanel(ctx, 3072, 'Allocates JavaScript memory until failure.');
+    const cap = await capFromPanel(ctx, 4096, 'Allocates JavaScript memory until failure.');
     ctx.panel.innerHTML = '';
     const CHUNK = 64 * MB;
     const kept: ArrayBuffer[] = [];

@@ -70,34 +70,43 @@ export const storageLab: Experiment = {
         SIZE = 8 * MB;
       const chunk = new Uint8Array(SIZE);
       for (let i = 0; i < SIZE; i += 4096) chunk[i] = (i / 4096) & 255; // not trivially compressible pattern
-      ctx.log('IndexedDB: writing 80 MB…');
-      const t0 = performance.now();
-      for (let i = 0; i < N; i++) {
-        const b = new Blob([chunk], { type: 'application/octet-stream' });
-        await tx(db, 'blobs', 'readwrite', (s) => s.put(b, `b${i}`));
+      // Run 1 on the iPad (claude.ai frame) failed storing Blobs; measure Blob and ArrayBuffer separately.
+      const variants: [string, () => Blob | ArrayBuffer][] = [
+        ['blob', () => new Blob([chunk], { type: 'application/octet-stream' })],
+        ['arrayBuffer', () => chunk.slice().buffer],
+      ];
+      const results: Record<string, unknown> = {};
+      for (const [name, make] of variants) {
+        try {
+          ctx.log(`IndexedDB (${name}): writing 80 MB…`);
+          const t0 = performance.now();
+          for (let i = 0; i < N; i++) {
+            const v = make();
+            await tx(db, 'blobs', 'readwrite', (st) => st.put(v, `${name}${i}`));
+          }
+          const writeMs = performance.now() - t0;
+          const t1 = performance.now();
+          let readBytes = 0;
+          for (let i = 0; i < N; i++) {
+            const v = await tx<Blob | ArrayBuffer>(db, 'blobs', 'readonly', (st) => st.get(`${name}${i}`));
+            if (v instanceof Blob) readBytes += (await v.arrayBuffer()).byteLength;
+            else if (v) readBytes += v.byteLength;
+          }
+          const readMs = performance.now() - t1;
+          results[name] = {
+            writeMBps: round((N * SIZE) / MB / (writeMs / 1000), 1),
+            readMBps: round(readBytes / MB / (readMs / 1000), 1),
+            readBackComplete: readBytes === N * SIZE,
+          };
+        } catch (e) {
+          results[name] = `error: ${(e as Error).name}: ${(e as Error).message}`;
+        }
       }
-      const writeMs = performance.now() - t0;
-      ctx.log('IndexedDB: reading back…');
-      const t1 = performance.now();
-      let readBytes = 0;
-      for (let i = 0; i < N; i++) {
-        const b = await tx<Blob>(db, 'blobs', 'readonly', (s) => s.get(`b${i}`));
-        if (b) readBytes += (await b.arrayBuffer()).byteLength;
-      }
-      const readMs = performance.now() - t1;
       const est = await navigator.storage?.estimate?.();
-      out.estimateWithBlobs = est ? { usageMB: round((est.usage ?? 0) / MB), quotaMB: round((est.quota ?? 0) / MB) } : null;
-      await tx(db, 'blobs', 'readwrite', (s) => s.clear());
+      out.estimateWithData = est ? { usageMB: round((est.usage ?? 0) / MB), quotaMB: round((est.quota ?? 0) / MB) } : null;
+      await tx(db, 'blobs', 'readwrite', (st) => st.clear());
       db.close();
-      out.indexedDB = {
-        blobs: N,
-        blobMB: SIZE / MB,
-        writeMs: round(writeMs),
-        writeMBps: round((N * SIZE) / MB / (writeMs / 1000), 1),
-        readMs: round(readMs),
-        readMBps: round(readBytes / MB / (readMs / 1000), 1),
-        readBackComplete: readBytes === N * SIZE,
-      };
+      out.indexedDB = results;
     } catch (e) {
       out.indexedDB = `error: ${(e as Error).message}`;
     }
