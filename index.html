@@ -135,6 +135,15 @@
               <select id="backdrop"><option value="dusk">City dusk</option><option value="studio">Studio grey</option><option value="night">Neon night</option><option value="white">White</option><option value="clear">Transparent</option></select></label>
             <div class="slider grow"><label for="light">Light</label><input id="light" type="range" min="-180" max="180" value="35"><output></output></div>
           </div>
+          <h3>Jiggle physics</h3>
+          <div class="row wrap">
+            <label class="check"><input id="chkPhysics" type="checkbox" checked> Physics on</label>
+            <button id="btnPhysReset" class="ghost small">Settle</button>
+          </div>
+          <div id="physGroups" class="row wrap"></div>
+          <div class="slider"><label for="physBounce">Bounce</label><input id="physBounce" type="range" min="0.2" max="2.5" step="0.05" value="1"><output></output></div>
+          <div class="slider"><label for="physGravity">Gravity</label><input id="physGravity" type="range" min="0" max="3" step="0.05" value="1"><output></output></div>
+          <p class="hint" id="physInfo"></p>
           <h3>Skeleton</h3>
           <p class="hint" id="rigInfo"></p>
           <details><summary>Fix bone matching</summary><div id="rigMap" class="list"></div></details>

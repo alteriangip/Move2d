@@ -9,6 +9,7 @@ import { detectRig, collectBones, Poser, SLOTS, SLOT_LABEL, FINGERS } from './ri
 import { POSES, ANIMATIONS, applyPose, mirrorPose } from './poses.js';
 import { Face } from './face.js';
 import { Timeline } from './timeline.js';
+import { SpringPhysics, GROUPS } from './physics.js';
 import { putFile, getFile, local, saveFile } from './storage.js';
 
 const $ = id => document.getElementById(id);
@@ -165,6 +166,8 @@ function buildPoser() {
   const overrides = local.get(state.modelKey, {});
   const map = detectRig(state.bones, overrides);
   state.poser = state.bones.length ? new Poser(state.model, state.bones, map) : null;
+  state.physics = state.poser ? new SpringPhysics(state.poser) : null;
+  applyPhysicsSettings(); buildPhysicsUI();
   buildMarkers(); buildRigUI(); fillBoneSelect();
   if (!state.bones.length) toast('This model has no skeleton, so it can be viewed but not posed.');
 }
@@ -249,6 +252,7 @@ function updateMarkers() {
 
 function select(bone) {
   state.selected = bone;
+  if (state.physics) { state.physics.paused.clear(); if (bone && state.physics.has(bone)) state.physics.paused.add(bone); }
   $('selName').textContent = bone ? boneLabel(bone) : 'Tap a joint to pose';
   $('boneSelect').value = bone ? bone.name : '';
   const limb = bone && limbOf(bone);
@@ -296,7 +300,7 @@ gizmo.addEventListener('dragging-changed', e => {
 });
 gizmo.addEventListener('objectChange', () => {
   if (gizmo.object === ikTarget && state.poser) state.poser.solveIK(ikTarget.userData.side, ikTarget.userData.limb, ikTarget.position);
-  else state.model?.updateMatrixWorld(true);
+  else { state.model?.updateMatrixWorld(true); if (gizmo.object?.isBone) state.physics?.setAuthored(gizmo.object); }
   syncSliders();
 });
 
@@ -337,11 +341,12 @@ axes.forEach(id => {
     const b = state.selected; if (!b || !state.poser) return;
     const e = axes.map(a => +$(a).value);
     state.poser.setOwnDelta(b, state.poser.charRot(e));
+    state.physics?.setAuthored(b);
     $(id + 'v').textContent = Math.round($(id).value) + '°';
   });
   $(id).addEventListener('change', afterEdit);
 });
-$('btnResetBone').onclick = () => { if (!state.selected) return; pushUndo(); state.poser.resetBone(state.selected); afterEdit(); syncSliders(); };
+$('btnResetBone').onclick = () => { if (!state.selected) return; pushUndo(); state.poser.resetBone(state.selected); state.physics?.setAuthored(state.selected); afterEdit(); syncSliders(); };
 function fillBoneSelect() {
   const sel = $('boneSelect');
   sel.textContent = '';
@@ -358,8 +363,13 @@ $('boneSelect').onchange = e => select(state.bones.find(b => b.name === e.target
 $('chkAllBones').onchange = e => { state.showAll = e.target.checked; buildMarkers(); };
 
 // ---------- edits, undo, autokey -------------------------------------------------------------------
-function capture() { return { pose: state.poser.snapshot(), face: state.face?.snapshot() || {} }; }
-function restoreCap(c) { state.poser.restore(c.pose); state.face?.restore(c.face); syncSliders(); syncFaceUI(); }
+function capture() {
+  const pose = state.physics ? state.physics.withAuthored(() => state.poser.snapshot()) : state.poser.snapshot();
+  return { pose, face: state.face?.snapshot() || {} };
+}
+/** Call after anything that sets every bone (presets, undo, timeline): springs take it as their rest. */
+function poseChanged() { state.physics?.sync(); }
+function restoreCap(c) { state.poser.restore(c.pose); poseChanged(); state.face?.restore(c.face); syncSliders(); syncFaceUI(); }
 function pushUndo() { if (!state.poser) return; state.undo.push(capture()); if (state.undo.length > 60) state.undo.shift(); state.redo = []; }
 function afterEdit() {
   state.activePose = null; markPose();
@@ -386,6 +396,7 @@ function usePreset(p) {
   pushUndo();
   const def = $('chkMirrorPreset').checked ? mirrorPose(p) : p;
   applyPose(state.poser, def, state.face);
+  poseChanged();
   for (const s of ['L', 'R']) state.hands[s] = { ...zeroHand(), ...(def.fingers?.[s] || {}) };
   syncHandsUI(); syncSliders(); syncFaceUI();
   afterEdit();
@@ -394,7 +405,7 @@ function usePreset(p) {
 $('btnMirror').onclick = () => {
   if (!state.poser) return;
   pushUndo();
-  state.poser.restore(state.poser.mirrorSnapshot(state.poser.snapshot()));
+  state.poser.restore(state.poser.mirrorSnapshot(capture().pose)); poseChanged();
   const h = state.hands.L; state.hands.L = state.hands.R; state.hands.R = h; syncHandsUI();
   afterEdit(); syncSliders();
 };
@@ -510,7 +521,7 @@ function syncTimelineUI() {
 function seek(t) {
   state.time = Math.max(0, Math.min(state.tl.duration, t));
   $('tlScrub').value = state.time;
-  if (state.tl.keys.length && state.poser) { state.tl.evaluate(state.time, state.poser, state.face); syncSliders(); syncFaceUI(); }
+  if (state.tl.keys.length && state.poser) { state.tl.evaluate(state.time, state.poser, state.face); poseChanged(); syncSliders(); syncFaceUI(); }
   syncTimelineUI();
 }
 $('tlScrub').oninput = e => { if (state.playing) togglePlay(false); seek(+e.target.value); };
@@ -539,7 +550,7 @@ function fillAnimPresets() {
     const a = ANIMATIONS.find(x => x.id === sel.value); sel.value = '';
     if (!a || !state.poser) return;
     const tl = new Timeline();
-    for (const [t, pose] of a.keys) { applyPose(state.poser, pose, state.face); const c = capture(); tl.setKey(t, c.pose, c.face); }
+    for (const [t, pose] of a.keys) { applyPose(state.poser, pose, state.face); poseChanged(); const c = capture(); tl.setKey(t, c.pose, c.face); }
     tl.duration = a.keys.at(-1)[0]; tl.loop = a.loop;
     state.tl = tl; state.time = 0;
     syncTimelineUI(); seek(0); togglePlay(true);
@@ -619,6 +630,38 @@ function buildRigUI() {
   }
 }
 
+// ---------- jiggle physics ---------------------------------------------------------------------
+const physDefaults = { on: true, bounce: 1, gravity: 1, groups: { hair: true, tail: true, cloth: true, chest: true } };
+function physSettings() { return { ...physDefaults, ...local.get('physics', {}), groups: { ...physDefaults.groups, ...(local.get('physics', {}).groups || {}) } }; }
+function applyPhysicsSettings() {
+  const ph = state.physics; if (!ph) return;
+  const st = physSettings();
+  ph.enabled = st.on; ph.bounce = st.bounce; ph.gravityScale = st.gravity; Object.assign(ph.groups, st.groups);
+}
+function savePhys(patch) { const st = { ...physSettings(), ...patch }; local.set('physics', st); applyPhysicsSettings(); }
+function buildPhysicsUI() {
+  const box = $('physGroups'); if (!box) return;
+  box.textContent = '';
+  const ph = state.physics, st = physSettings();
+  $('chkPhysics').checked = st.on;
+  $('physBounce').value = st.bounce; $('physBounce').nextElementSibling.textContent = Math.round(st.bounce * 100) + '%';
+  $('physGravity').value = st.gravity; $('physGravity').nextElementSibling.textContent = Math.round(st.gravity * 100) + '%';
+  if (!ph || !ph.joints.length) { $('physInfo').textContent = 'No hair, tail, cloth or chest bones found on this model.'; return; }
+  $('physInfo').textContent = ph.joints.length + ' bones swing. A bone you select holds still so you can pose it.';
+  for (const [k, g] of Object.entries(GROUPS)) {
+    const n = ph.counts[k]; if (!n) continue;
+    const lab = document.createElement('label'); lab.className = 'check';
+    const cb = Object.assign(document.createElement('input'), { type: 'checkbox', checked: st.groups[k] !== false, id: 'phys_' + k });
+    cb.onchange = () => savePhys({ groups: { ...physSettings().groups, [k]: cb.checked } });
+    lab.append(cb, document.createTextNode(` ${g.label} (${n})`));
+    box.append(lab);
+  }
+}
+$('chkPhysics').onchange = e => { savePhys({ on: e.target.checked }); if (e.target.checked) state.physics?.reset(); };
+$('physBounce').oninput = e => { savePhys({ bounce: +e.target.value }); e.target.nextElementSibling.textContent = Math.round(e.target.value * 100) + '%'; };
+$('physGravity').oninput = e => { savePhys({ gravity: +e.target.value }); e.target.nextElementSibling.textContent = Math.round(e.target.value * 100) + '%'; };
+$('btnPhysReset').onclick = () => state.physics?.reset();
+
 // ---------- tabs, files, resize ------------------------------------------------------------------
 function openTab(name) {
   $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
@@ -655,8 +698,10 @@ function tick() {
     if (t > state.tl.duration) { if (state.tl.loop) t %= state.tl.duration; else { t = state.tl.duration; togglePlay(false); } }
     state.time = t;
     state.tl.evaluate(t, state.poser, state.face);
+    poseChanged();
     $('tlScrub').value = t; $('tlTime').textContent = t.toFixed(2) + ' s';
   }
+  state.physics?.update(dt);
   orbit.update();
   updateMarkers();
   render();

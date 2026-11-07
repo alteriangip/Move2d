@@ -9,6 +9,7 @@ A phone and tablet app (Android and iOS) for viewing, posing and animating a rig
 - **Hands**: per-finger curl and spread, plus quick shapes (fist, point, peace, open, claw).
 - **Face**: every shape key on the model, with quick buttons for smile, wink, blink and mouth.
 - **Animate**: keyframe timeline with easing and looping, preset animations (idle, sly idle, wave, fighting bounce, high kick, spin kick, walk, jump and land), save and reload, export as `.glb` with the animation baked in, or as `.json`.
+- **Jiggle physics**: hair, tail, skirt and jacket pieces, ties and chest bones swing and settle as she moves, and collide with the head and body. Toggle each group and tune Bounce and Gravity under Scene. Keyframes store only your pose, not the jiggle.
 - Mirror a pose, save your own poses, undo and redo, anime toon shading with outlines, backdrops, and picture export.
 
 Preset poses are written in a body-relative frame, so they work on any humanoid skeleton the app can recognise:

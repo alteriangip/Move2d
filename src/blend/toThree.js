@@ -66,7 +66,7 @@ export async function blendToThree(buffer, { include, textures = true, onProgres
   const armOb = info.armature.ob;
   const armData = armOb.get('data', 'bArmature');
   const all = [];
-  const walk = (lb, parent) => { for (const b of f.list(lb, 'Bone')) { const rec = { name: b.str('name'), deform: !(b.num('flag') & BONE_NO_DEFORM), mat: new THREE.Matrix4().fromArray(b.nums('arm_mat')), parent }; all.push(rec); walk(b.sub('childbase'), rec); } };
+  const walk = (lb, parent) => { for (const b of f.list(lb, 'Bone')) { const rec = { name: b.str('name'), deform: !(b.num('flag') & BONE_NO_DEFORM), mat: new THREE.Matrix4().fromArray(b.nums('arm_mat')), length: b.has('length') ? b.num('length') : 0, parent }; all.push(rec); walk(b.sub('childbase'), rec); } };
   walk(armData.sub('bonebase'), null);
   const byName = new Map(all.map(b => [b.name, b]));
   const twin = n => { for (const pre of ['ORG-', 'ORG_', 'MCH-']) if (n.startsWith(pre)) for (const d of ['DEF-', 'DEF_']) { const t = byName.get(d + n.slice(pre.length)); if (t && t.deform) return t; } return null; };
@@ -82,7 +82,7 @@ export async function blendToThree(buffer, { include, textures = true, onProgres
   const armNode = new THREE.Object3D(); armNode.name = info.armature.name;
   armWorld.decompose(armNode.position, armNode.quaternion, armNode.scale);
   root.add(armNode);
-  const bones = deform.map(b => { const bone = new THREE.Bone(); bone.name = b.name; b.node = bone; return bone; });
+  const bones = deform.map(b => { const bone = new THREE.Bone(); bone.name = b.name; if (b.length) bone.userData.boneLength = b.length; b.node = bone; return bone; });
   for (const b of deform) {
     const local = b.dparent ? b.dparent.mat.clone().invert().multiply(b.mat) : b.mat.clone();
     local.decompose(b.node.position, b.node.quaternion, b.node.scale);
