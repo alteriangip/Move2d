@@ -1,6 +1,4 @@
-# Milestone 0 lab: unit tests on every push; optional GitHub Pages deployment
-# (needed for Home Screen / standalone tests — enable Pages with source
-# "GitHub Actions" in the repository settings, then run this workflow).
+# Milestone 0 lab (archived spike): unit tests only.
 name: m0-lab
 on:
   push:
@@ -8,9 +6,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
-concurrency: { group: m0-lab-pages, cancel-in-progress: true }
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,14 +16,3 @@ jobs:
         with: { node-version: 22, cache: npm, cache-dependency-path: spikes/m0-lab/package-lock.json }
       - run: npm ci
       - run: npm test
-      - run: npm run build:pages
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: spikes/m0-lab/dist-pages }
-  deploy:
-    if: github.event_name == 'workflow_dispatch'
-    needs: test
-    runs-on: ubuntu-latest
-    environment: { name: github-pages, url: '${{ steps.d.outputs.page_url }}' }
-    steps:
-      - id: d
-        uses: actions/deploy-pages@v4

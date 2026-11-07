@@ -34,6 +34,22 @@ Output: `docs/adr/0001-platform-measurements.md`, with doc 04 updated.
 
 ## Milestone 1: Foundation (≈4–5 weeks)
 
+**Status: implemented** in `app/` (owner asked to stop M0 testing and build). Deviations from
+the plan, stated plainly:
+
+- A single Vite app with `src/engine/*` (math, model, render, io) and `src/editor/*` folders,
+  rather than a pnpm multi-package workspace. The renderer still has no React or editor imports;
+  enforcing this in CI is a follow-up.
+- Layers are drawn as one texture each. Atlas packing arrives with meshes in M2.
+- Reordering uses Move up/down, Group, and Move into/out of group actions (no drag-and-drop yet).
+- The installable PWA is the GitHub Pages build (manual workflow run). The claude.ai-hosted
+  build runs in a frame, so it cannot be installed to the Home Screen.
+
+Automated: 17 unit tests (document ops, undo/redo, .olive round trip and validation, import
+mapping, view transforms) and a 21-step end-to-end script (`app/scripts/e2e.mjs`): PSD import →
+hierarchy → tap select → Pencil drag → undo/redo → opacity → rename → group → pinch zoom →
+autosave and reload → export and re-import → portrait.
+
 **Deliverables**
 
 - pnpm monorepo, strict TypeScript, CI (lint, typecheck, unit, e2e, dependency rules, licence
