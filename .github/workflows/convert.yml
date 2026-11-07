@@ -1,0 +1,51 @@
+name: Convert .blend to .glb
+
+# Run from the Actions tab: paste a share link to your .blend and press "Run workflow".
+# The .glb appears under the run's Artifacts for 1 day. Make the repository private first:
+# on a public repository anyone signed in to GitHub can download run artifacts.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Link to your .blend (Google Drive "anyone with the link", Dropbox, or any direct download)'
+        required: true
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse to run on a public repository
+        if: ${{ !github.event.repository.private }}
+        run: |
+          echo "::error::This repository is public, so anyone could download the converted model. Make it private (Settings > General > Danger Zone > Change visibility), then run again."
+          exit 1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - run: pip install --quiet bpy gdown
+      - name: Download the .blend
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          mkdir -p in
+          case "$URL" in
+            *drive.google.com*|*docs.google.com*) gdown --fuzzy --quiet "$URL" -O in/model.blend ;;
+            *dropbox.com*)
+              u="${URL//dl=0/dl=1}"
+              case "$u" in *dl=1*) ;; *\?*) u="$u&dl=1" ;; *) u="$u?dl=1" ;; esac
+              curl -sSLf -o in/model.blend "$u" ;;
+            *) curl -sSLf -o in/model.blend "$URL" ;;
+          esac
+          magic=$(head -c 4 in/model.blend | od -An -tx1 | tr -d ' \n')
+          if [ "$(head -c 7 in/model.blend)" != "BLENDER" ] && [ "$magic" != "28b52ffd" ] && [ "$magic" != "1f8b0800" ]; then
+            echo "::error::The link did not give a .blend file. For Google Drive, share it as 'Anyone with the link'. For Dropbox, use the normal share link."
+            exit 1
+          fi
+          ls -l in/model.blend
+      - name: Convert
+        run: python tools/convert.py in/model.blend out/model.glb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: model-glb
+          path: out/model.glb
+          retention-days: 1

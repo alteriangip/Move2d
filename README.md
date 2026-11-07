@@ -27,6 +27,8 @@ The script never saves your `.blend`. It handles the things that break a plain g
 Rigify deform bones parented to ORG/MCH bones (re-linked so hands, hair and tail follow), Geometry Nodes outline
 modifiers that block skinning, custom toon shaders (swapped for the base colour texture), and driven face shape keys.
 
+**No computer?** Make this repository private, upload the `.blend` to Google Drive or Dropbox with a share link, then on GitHub open **Actions → Convert .blend to .glb → Run workflow** and paste the link. Download the `.glb` from the finished run's **Artifacts** (kept for 1 day). The workflow refuses to run while the repository is public.
+
 Model files are git-ignored. You can also drop `model.glb` into `public/models/` before building to ship it inside your own copy of the app.
 
 ## Run and build
