@@ -65,7 +65,7 @@ mouth, breathing, hair physics and three animations).
 ## Engine tests and the CLI
 
 ```sh
-swift test                          # 61 unit tests
+swift test                          # unit tests for every module
 swift run move2d-cli info character.psd
 swift run move2d-cli import character.psd Character.move2d --spacing 40
 swift run move2d-cli sample Sample.move2d
