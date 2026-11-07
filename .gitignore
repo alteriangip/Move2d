@@ -1,0 +1,8 @@
+.build/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+App/Move2D.xcodeproj/
+DerivedData/
+.DS_Store
+/out/
