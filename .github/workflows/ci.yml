@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  engine-linux:
+    name: Engine tests (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.0
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift test
+
+  apple:
+    name: Engine tests + iPad app build (macOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)" && xcodebuild -version
+      - name: Swift package tests (includes Metal and AVFoundation code)
+        run: swift test
+      - name: Generate Xcode project
+        run: brew install xcodegen && cd App && xcodegen generate
+      - name: Build iPad app (simulator)
+        run: |
+          set -o pipefail
+          cd App
+          xcodebuild -project Move2D.xcodeproj -scheme Move2D \
+            -destination 'generic/platform=iOS Simulator' \
+            -configuration Debug CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error:|warning: .*deprecated|BUILD (SUCCEEDED|FAILED)|\*\* " | head -300

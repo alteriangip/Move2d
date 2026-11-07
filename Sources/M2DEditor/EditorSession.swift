@@ -105,6 +105,10 @@ public final class EditorSession {
     @ObservationIgnored public var maxUndo = 80
     /// Parameters manually set while animating (overrides the clip until the playhead moves).
     @ObservationIgnored var manualOverrides: Set<ObjectID> = []
+    /// Called whenever a new undo step is recorded (name of the action). The app
+    /// uses this to mirror steps into the system UndoManager (⌘Z, three-finger
+    /// gestures, document dirty tracking).
+    @ObservationIgnored public var onUndoableChange: ((String) -> Void)?
 
     public init(bundle: ProjectBundle) {
         self.bundle = bundle
@@ -153,6 +157,7 @@ public final class EditorSession {
             redoStack.removeAll()
         }
         commit(next, textures: textures)
+        if gestureSnapshot == nil { onUndoableChange?(name) }
     }
 
     /// Begin a continuous edit (drag). Intermediate updates share one undo step.
@@ -168,7 +173,24 @@ public final class EditorSession {
             undoStack.append(snap)
             if undoStack.count > maxUndo { undoStack.removeFirst() }
             redoStack.removeAll()
+            onUndoableChange?(snap.0)
         }
+    }
+
+    /// Replace document content but keep parameter values, selection and playhead.
+    public func replaceContentKeepingState(with newBundle: ProjectBundle, actionName: String) {
+        perform(actionName, textures: true) { $0 = newBundle }
+    }
+
+    /// Replace the whole document (e.g. after importing a PSD) as one undoable step.
+    public func replaceContent(with newBundle: ProjectBundle, actionName: String = "Import") {
+        perform(actionName, textures: true) { $0 = newBundle }
+        parameterValues = rig.defaultParameterValues()
+        currentClipID = project.animations.first?.id
+        selection = Selection()
+        simulator = PhysicsSimulator(rig: project.physics)
+        playhead = 0
+        refreshPose()
     }
 
     public func cancelGesture() {
@@ -238,7 +260,8 @@ public final class EditorSession {
         if physicsEnabled && !project.physics.groups.isEmpty {
             simulator.step(dt: dt, parameters: rig.parameters, values: &values)
         }
-        if values != parameterValues || isPlaying || physicsEnabled {
+        // Only publish changes: observers (panels) should not redraw every frame at rest.
+        if values != parameterValues {
             parameterValues = values
             refreshPose()
         }
