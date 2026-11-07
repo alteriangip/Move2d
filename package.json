@@ -25,6 +25,7 @@
     "@capacitor/filesystem": "^8.1.5",
     "@capacitor/ios": "^8.6.0",
     "@capacitor/share": "^8.0.3",
+    "fzstd": "^0.1.1",
     "three": "^0.187.0"
   },
   "devDependencies": {

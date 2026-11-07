@@ -21,9 +21,9 @@
       <canvas id="view"></canvas>
       <div id="empty" class="overlay">
         <h1>Load your character</h1>
-        <p>Pick a <b>.glb</b>, <b>.gltf</b>, <b>.vrm</b> or <b>.fbx</b> file. The app keeps it, so you only do this once.</p>
+        <p>Pick a <b>.blend</b>, <b>.glb</b>, <b>.vrm</b> or <b>.fbx</b> file, or a <b>.zip</b> holding one. The app keeps it, so you only do this once.</p>
         <button class="primary" data-action="load">Choose model</button>
-        <p class="small">Have a .blend? Export it from Blender with File → Export → glTF 2.0 (.glb), or send it to Claude to convert.</p>
+        <p class="small">.blend files from Blender 3.6 to 5.x open directly. Textures need to be packed in the file (File → External Data → Pack Resources).</p>
       </div>
       <div id="busy" class="overlay" hidden><div class="spinner"></div><p id="busyText">Loading…</p></div>
       <div id="modebar" hidden>

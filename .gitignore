@@ -12,3 +12,4 @@ public/models/*
 android/app/src/main/assets/public/
 ios/App/App/public/
 .DS_Store
+dist-converter/

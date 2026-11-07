@@ -86,12 +86,23 @@ const boneLabel = bone => { const s = slotOf(bone); return s ? SLOT_LABEL(s) : b
 async function loadBlob(blob, name, { save = true } = {}) {
   busy(true, 'Opening ' + name + '…');
   try {
-    const buf = await blob.arrayBuffer();
-    const ext = name.toLowerCase().split('.').pop();
+    let buf = await blob.arrayBuffer();
+    let ext = name.toLowerCase().split('.').pop();
+    if (ext === 'zip') {
+      const { unzipSync } = await import('three/addons/libs/fflate.module.js');
+      const files = unzipSync(new Uint8Array(buf));
+      const inner = Object.keys(files).find(k => /\.(glb|vrm|fbx|blend)$/i.test(k) && !k.startsWith('__MACOSX'));
+      if (!inner) throw new Error('No .glb, .vrm, .fbx or .blend inside that .zip.');
+      buf = files[inner].slice().buffer; ext = inner.toLowerCase().split('.').pop();
+    }
     let root;
     if (ext === 'fbx') root = new FBXLoader().parse(buf, '');
     else if (['glb', 'gltf', 'vrm'].includes(ext)) root = (await new GLTFLoader().parseAsync(buf, '')).scene;
-    else throw new Error('Unsupported file type .' + ext + '. Use .glb, .gltf, .vrm or .fbx.');
+    else if (ext === 'blend' || /^blend\d+$/.test(ext)) {
+      const { blendToThree } = await import('./blend/toThree.js');
+      root = (await blendToThree(buf, { onProgress: t => busy(true, t + '…') })).root;
+    }
+    else throw new Error('Unsupported file type .' + ext + '. Use .blend, .glb, .gltf, .vrm, .fbx or a .zip of one.');
     setModel(root, name);
     if (save) await putFile('model', blob, name).catch(() => toast('Could not keep the model for next time (storage full).'));
   } catch (e) {
