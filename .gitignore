@@ -1,0 +1,14 @@
+node_modules/
+dist/
+# Your character model stays on your machine: it is not redistributable.
+public/models/*
+!public/models/README.md
+*.blend
+*.blend1
+*.glb
+*.gltf
+*.fbx
+*.vrm
+android/app/src/main/assets/public/
+ios/App/App/public/
+.DS_Store

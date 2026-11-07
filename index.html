@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#141320">
+  <title>Move2D</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <button id="btnUndo" class="icon" title="Undo" aria-label="Undo">↶</button>
+      <button id="btnRedo" class="icon" title="Redo" aria-label="Redo">↷</button>
+      <span id="title">Move2D</span>
+      <button id="btnJoints" class="chip on" title="Show joints">Joints</button>
+      <button id="btnShot" class="icon" title="Save picture" aria-label="Save picture">◉</button>
+    </header>
+
+    <main id="stage">
+      <canvas id="view"></canvas>
+      <div id="empty" class="overlay">
+        <h1>Load your character</h1>
+        <p>Pick a <b>.glb</b>, <b>.gltf</b>, <b>.vrm</b> or <b>.fbx</b> file. The app keeps it, so you only do this once.</p>
+        <button class="primary" data-action="load">Choose model</button>
+        <p class="small">Have a .blend? Export it from Blender with File → Export → glTF 2.0 (.glb), or send it to Claude to convert.</p>
+      </div>
+      <div id="busy" class="overlay" hidden><div class="spinner"></div><p id="busyText">Loading…</p></div>
+      <div id="modebar" hidden>
+        <span id="selName">Nothing selected</span>
+        <div class="seg" role="group" aria-label="Edit mode">
+          <button data-mode="rotate" class="on">Rotate</button>
+          <button data-mode="ik">Drag limb</button>
+          <button data-mode="move">Move body</button>
+        </div>
+      </div>
+      <div id="toast" role="status"></div>
+    </main>
+
+    <section id="timeline" hidden>
+      <div class="tl-row">
+        <button id="tlPlay" class="icon big" aria-label="Play">▶</button>
+        <button id="tlPrev" class="icon" aria-label="Previous key">⏮</button>
+        <button id="tlKey" class="primary small">+ Key</button>
+        <button id="tlNext" class="icon" aria-label="Next key">⏭</button>
+        <span id="tlTime" class="mono">0.00 s</span>
+        <button id="tlDel" class="ghost small">Delete key</button>
+      </div>
+      <div id="tlTrack"><div id="tlKeys"></div><input id="tlScrub" type="range" min="0" max="2" step="0.01" value="0" aria-label="Time"></div>
+    </section>
+
+    <section id="sheet">
+      <nav id="tabs" role="tablist">
+        <button role="tab" data-tab="poses" class="on">Poses</button>
+        <button role="tab" data-tab="edit">Edit</button>
+        <button role="tab" data-tab="hands">Hands</button>
+        <button role="tab" data-tab="face">Face</button>
+        <button role="tab" data-tab="anim">Animate</button>
+        <button role="tab" data-tab="scene">Scene</button>
+      </nav>
+      <div id="panels">
+        <div class="panel on" data-panel="poses">
+          <div class="row wrap">
+            <button id="btnMirror" class="ghost small">Mirror pose</button>
+            <button id="btnSavePose" class="ghost small">Save my pose</button>
+            <label class="check"><input id="chkMirrorPreset" type="checkbox"> Use other side</label>
+          </div>
+          <div id="poseGrid"></div>
+          <h3>My poses</h3>
+          <div id="myPoses" class="list"><p class="hint">Poses you save show up here.</p></div>
+        </div>
+
+        <div class="panel" data-panel="edit">
+          <p class="hint" id="editHint">Tap a joint dot on the character to select it. Drag the rings to rotate, or use the sliders.</p>
+          <div class="row wrap">
+            <select id="boneSelect" aria-label="Bone"></select>
+            <button id="btnResetBone" class="ghost small">Reset bone</button>
+          </div>
+          <div class="slider"><label for="rx">Bend</label><input id="rx" type="range" min="-180" max="180" step="0.5"><output id="rxv"></output></div>
+          <div class="slider"><label for="ry">Turn</label><input id="ry" type="range" min="-180" max="180" step="0.5"><output id="ryv"></output></div>
+          <div class="slider"><label for="rz">Tilt</label><input id="rz" type="range" min="-180" max="180" step="0.5"><output id="rzv"></output></div>
+          <div class="row wrap">
+            <label class="check"><input id="chkAllBones" type="checkbox"> Show hair, tail and cloth bones</label>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="hands">
+          <div class="hands">
+            <div data-side="L"><h3>Left hand</h3><div class="shapes"></div><div class="fsliders"></div></div>
+            <div data-side="R"><h3>Right hand</h3><div class="shapes"></div><div class="fsliders"></div></div>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="face">
+          <div class="row wrap" id="faceQuick"></div>
+          <input id="faceSearch" type="search" placeholder="Search shape keys" aria-label="Search shape keys">
+          <div id="faceList" class="list"><p class="hint">This model has no face shape keys.</p></div>
+        </div>
+
+        <div class="panel" data-panel="anim">
+          <div class="row wrap">
+            <select id="animPreset" aria-label="Preset animation"><option value="">Start from a preset…</option></select>
+            <button id="btnAnimClear" class="ghost small">Clear keys</button>
+          </div>
+          <div class="row wrap">
+            <label class="field">Length <input id="tlDur" type="number" min="0.2" max="120" step="0.1" value="2"> s</label>
+            <label class="check"><input id="tlLoop" type="checkbox" checked> Loop</label>
+            <label class="check"><input id="tlSmooth" type="checkbox" checked> Ease in/out</label>
+            <label class="check"><input id="tlAuto" type="checkbox"> Auto key</label>
+          </div>
+          <p class="hint">Pose her, move the time slider, pose again and tap <b>+ Key</b>. Playback blends between keys.</p>
+          <div class="row wrap">
+            <button id="btnAnimSave" class="ghost small">Save animation</button>
+            <button id="btnAnimExport" class="ghost small">Export .glb</button>
+            <button id="btnAnimJson" class="ghost small">Export .json</button>
+            <button id="btnAnimImport" class="ghost small">Import .json</button>
+          </div>
+          <h3>Saved animations</h3>
+          <div id="myAnims" class="list"><p class="hint">Saved animations show up here.</p></div>
+        </div>
+
+        <div class="panel" data-panel="scene">
+          <div class="row wrap">
+            <button class="primary small" data-action="load">Load model</button>
+            <span id="modelName" class="hint"></span>
+          </div>
+          <div class="row wrap">
+            <label class="field">Shading
+              <select id="shading"><option value="toon">Anime (toon)</option><option value="standard">Original</option><option value="flat">Flat colour</option></select></label>
+            <label class="check"><input id="chkOutline" type="checkbox" checked> Outline</label>
+            <label class="check"><input id="chkFloor" type="checkbox" checked> Floor</label>
+          </div>
+          <div class="row wrap">
+            <label class="field">Backdrop
+              <select id="backdrop"><option value="dusk">City dusk</option><option value="studio">Studio grey</option><option value="night">Neon night</option><option value="white">White</option><option value="clear">Transparent</option></select></label>
+            <div class="slider grow"><label for="light">Light</label><input id="light" type="range" min="-180" max="180" value="35"><output></output></div>
+          </div>
+          <h3>Skeleton</h3>
+          <p class="hint" id="rigInfo"></p>
+          <details><summary>Fix bone matching</summary><div id="rigMap" class="list"></div></details>
+        </div>
+      </div>
+    </section>
+  </div>
+  <input id="filePick" type="file" hidden>
+  <input id="jsonPick" type="file" accept="application/json,.json" hidden>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

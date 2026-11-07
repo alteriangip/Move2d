@@ -1,0 +1,7 @@
+{
+  "appId": "com.alteriangip.move2d",
+  "appName": "Move2D",
+  "webDir": "dist",
+  "android": { "allowMixedContent": false },
+  "ios": { "contentInset": "never" }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Move2D</string>
+    <string name="title_activity_main">Move2D</string>
+    <string name="package_name">com.alteriangip.move2d</string>
+    <string name="custom_url_scheme">com.alteriangip.move2d</string>
+</resources>
