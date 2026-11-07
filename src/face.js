@@ -1,12 +1,12 @@
 // Face shape keys (morph targets). Works with MMD Japanese names, VRM/ARKit and plain English names.
 const MEANINGS = {
-  blink: ['まばたき', 'blink', 'eyeclose', 'eyesclosed', 'eyesclose', '目閉じ', 'eyeblink', 'eyeblinkboth', 'close'],
-  wink: ['ウィンク', 'wink', 'ウィンク2', 'blinkl', 'eyeblinkleft', 'eyeclosel', 'winkl', 'ウィンク右', 'blinkleft'],
-  smile: ['笑い', 'smile', 'にこり', 'joy', 'happy', 'fun', '笑顔', 'mouthsmile', 'eyesmile', 'にっこり'],
-  mouthA: ['あ', 'a', 'aa', 'vrcvaa', 'moutha', 'mouthopen', 'jawopen', 'open'],
-  mouthO: ['お', 'o', 'oh', 'vrcvoh', 'moutho'],
-  angry: ['怒り', 'angry', 'anger', 'mad'],
-  sad: ['困る', 'sad', 'sorrow', 'troubled'],
+  blink: ['まばたき', 'blink', 'eyeclose', 'eyesclosed', 'eyesclose', '目閉じ', 'eyeblink', 'eyeblinkboth', 'faceyeclose', 'close'],
+  wink: ['ウィンク', 'wink', 'ウィンク2', 'blinkl', 'eyeblinkleft', 'eyeclosel', 'winkl', 'ウィンク右', 'blinkleft', 'faceyelwink'],
+  smile: ['笑い', 'smile', 'にこり', 'joy', 'happy', 'fun', '笑顔', 'mouthsmile', 'eyesmile', 'にっこり', 'facmthlaugh1', 'laugh'],
+  mouthA: ['あ', 'a', 'aa', 'vrcvaa', 'moutha', 'mouthopen', 'jawopen', 'facmthaa1', 'mthaa', 'open'],
+  mouthO: ['お', 'o', 'oh', 'vrcvoh', 'moutho', 'facmthoo'],
+  angry: ['怒り', 'angry', 'anger', 'mad', 'faceyeangry'],
+  sad: ['困る', 'sad', 'sorrow', 'troubled', 'faceyesad'],
   surprised: ['びっくり', 'surprised', 'surprise', 'shock'],
 };
 const norm = s => s.toLowerCase().replace(/[\s_.\-:]/g, '').replace(/[０-９]/g, c => '０１２３４５６７８９'.indexOf(c));

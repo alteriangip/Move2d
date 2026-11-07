@@ -17,12 +17,15 @@ open **Scene → Fix bone matching** and pick it from the list.
 
 ## Getting your model in
 
-Mobile apps cannot read `.blend` files directly. Convert once:
+Mobile apps cannot read `.blend` files directly. Convert once with the included script:
 
-1. Open the `.blend` in Blender.
-2. **File → External Data → Pack Resources** (so textures go inside).
-3. **File → Export → glTF 2.0**, format **glTF Binary (.glb)**. Tick *Include → Custom Properties* off, *Data → Shape Keys* on, *Animation* off unless you want it.
-4. Copy the `.glb` to your phone and tap **Choose model** in the app.
+1. Open the `.blend` in Blender (4.x or 5.x). Show the outfit you want, hide the others.
+2. **Scripting** tab → **Open** → `tools/blend_to_glb.py` → **Run Script** (▶).
+3. A `.glb` appears next to your `.blend`. Copy it to your phone and tap **Choose model** in the app.
+
+The script never saves your `.blend`. It handles the things that break a plain glTF export of game-style rigs:
+Rigify deform bones parented to ORG/MCH bones (re-linked so hands, hair and tail follow), Geometry Nodes outline
+modifiers that block skinning, custom toon shaders (swapped for the base colour texture), and driven face shape keys.
 
 Model files are git-ignored. You can also drop `model.glb` into `public/models/` before building to ship it inside your own copy of the app.
 

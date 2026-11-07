@@ -128,6 +128,13 @@ function setModel(root, name) {
   state.model = holder;
   state.modelName = name;
   state.bones = collectBones(holder);
+  // Centre on the hips rather than the bounding box, which a tail, cape or weapon can skew.
+  const hips = detectRig(state.bones).hips;
+  if (hips) {
+    const p = hips.getWorldPosition(new THREE.Vector3());
+    holder.position.x -= p.x; holder.position.z -= p.z;
+    holder.updateMatrixWorld(true);
+  }
   state.modelKey = 'rig:' + state.bones.length + ':' + state.bones.slice(0, 6).map(b => b.name).join('|');
   buildPoser();
   state.face = new Face(holder);

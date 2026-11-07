@@ -42,7 +42,8 @@ export function baseOf(name) {
   n = n.replace(/[左右]/g, '').replace(/left|right/g, '');
   n = n.replace(/(^|[^a-z])[lr](?=[^a-z]|$)/g, '$1');
   n = n.replace(/[\s_.\-]/g, '');
-  n = n.replace(/^(mixamorig\d*|bip0*1|bip|jbipc|jbip|def|org|ccbase|valvebipedbip01)/, '');
+  // Strip rig prefixes, possibly stacked: "DEF-Bip001 Pelvis" -> "pelvis".
+  for (let prev = ''; prev !== n;) { prev = n; n = n.replace(/^(mixamorig\d*|bip0*1|bip|jbipc|jbip|def|org|mch|ccbase|valvebipedbip01)/, ''); }
   return n;
 }
 
