@@ -182,6 +182,29 @@ existing points resampled through the current mapping. The topology stays a regu
 keeps bilinear evaluation well defined. Free-form ("custom") control layouts are listed as an
 open question in doc 07.
 
+**Extensibility for free-form control points (owner decision, M0).** The warp deformer is
+implemented against a `WarpMapping` interface. Deformer evaluation, reparenting, editing tools
+and serialization depend only on this interface, never on "grid":
+
+```ts
+interface WarpMapping {
+  kind: 'grid' | 'freeform';
+  /** control points in parent space (keyformed) */
+  pointCount: number;
+  /** forward map: local (u,v) → parent space, given current control points */
+  map(points: Float32Array, src: Float32Array, dst: Float32Array, n: number): void;
+  /** inverse map for reparenting; may be iterative */
+  invert(points: Float32Array, src: Float32Array, dst: Float32Array, n: number): void;
+  /** per-point local coordinates of children are precomputed per mapping kind */
+  bind(childRestLocal: Float32Array): BindingData;
+}
+```
+
+M3 ships `kind: 'grid'` (bilinear, as above). A later `kind: 'freeform'` (for example mean-value
+coordinates over an arbitrary control cage) plugs in without changing the hierarchy walker, the
+keyform system or the file format's deformer record. The format stores `mappingKind` and a flat
+point list from version 1.
+
 ### 1.5.2 Rotation deformer
 
 Keyformed `origin`, `angle`, `scale` and `opacity`. A child point `p` in rotation-local space maps

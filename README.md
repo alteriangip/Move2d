@@ -10,9 +10,16 @@ Live2D code and does not reverse-engineer proprietary formats.
 
 ## Status
 
-**Phase: planning. Awaiting approval before implementation starts.**
+**Phase: Milestone 0 (platform measurements). The lab is built; iPad runs are pending.**
 
-No application code exists yet. The planning documents are:
+No editor code exists yet. Milestone 1 starts only after the M0 results are approved.
+
+- M0 protocol and decision rules: [docs/m0/protocol.md](docs/m0/protocol.md)
+- Container baseline (not iPad data): [docs/m0/container-baseline.md](docs/m0/container-baseline.md)
+- Feature status register (impossible / expensive / not yet implemented): [docs/feature-status.md](docs/feature-status.md)
+- Lab source: [spikes/m0-lab](spikes/m0-lab)
+
+Planning documents:
 
 | # | Document | Contents |
 |---|----------|----------|
